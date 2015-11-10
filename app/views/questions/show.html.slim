@@ -1,12 +1,28 @@
-h4 
+h3
   = @question.title
 hr
 .container-fluid
   = @question.body
+  hr
+
+  - if @question.answers.any?
+    h4 #{@question.answers.count} Answers
+    table.table.table-striped
+      tbody
+        - @question.answers.each do |answer|
+          tr
+            td = answer.body
+            td
+              = link_to 'Edit', edit_question_answer_path(id: answer, 
+                                                     question_id: @question)
+              br
+              = link_to 'Delete', [@question, answer], data: { confirm: 'Sure?' }, 
+                                          method: :delete
 
   br
   =<> link_to 'Edit', edit_question_path(@question)
   =<> link_to 'Delete', @question, data: { confirm: 'Sure?' }, method: :delete
+  =<> link_to 'Add answer', new_question_answer_path(question_id: @question)
   hr
   = link_to 'Back', questions_path
 
