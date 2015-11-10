@@ -1,0 +1,21 @@
+html
+  head
+    title Questions & Answers
+    = stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true
+    = javascript_include_tag "application", "data-turbolinks-track" => true
+    = csrf_meta_tags
+
+  body
+    .container-fluid
+      nav.navbar.navbar-default
+        .container-fluid
+          .navbar-brand
+            = link_to 'Link 1', '#'
+          ul.nav.navbar-nav.navbar-right
+            li = link_to 'Link 2', '#'
+            li = link_to 'Link 3', '#'
+
+      = yield
+
+      = debug(params) if Rails.env.development?
+

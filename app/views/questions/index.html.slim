@@ -1,0 +1,18 @@
+h3 Questions 
+
+table.table.table-striped
+  thead
+    tr
+      th Title
+      th
+
+  tbody
+    - @questions.each do |question|
+      tr
+        td = question.title
+        td
+          = link_to 'View', question
+          br
+
+= link_to 'Add question', new_question_path
+
