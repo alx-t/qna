@@ -46,4 +46,3 @@ class AnswersController < ApplicationController
     params.require(:answer).permit(:question_id, :body)
   end
 end
-

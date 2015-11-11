@@ -4,9 +4,8 @@ FactoryGirl.define do
     body 'MyText'
   end
 
-  factory :invalid_answer, class: "Answer" do
+  factory :invalid_answer, class: 'Answer' do
     question nil
     body nil
   end
 end
-
