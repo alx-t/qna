@@ -12,11 +12,13 @@ html
           .navbar-brand
             = link_to 'Link 1', '#'
           ul.nav.navbar-nav.navbar-right
-            li = link_to 'Link 2', '#'
-            li = link_to 'Link 3', '#'
+            - if current_user
+              li = link_to 'Log out', destroy_user_session_path, method: :delete
+            - else
+              li = link_to 'Log in', new_user_session_path
+              li = link_to 'Register', new_user_registration_path
 
-      .notice = notice
-      .alert = alert
+      = render 'shared/notice'
 
       = yield
 
