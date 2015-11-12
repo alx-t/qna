@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-  let(:question) { create(:question) }
+  let(:question) { create :question }
+  let(:user) { create :user }
+  let(:user_question) { create :question, user: user }
 
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2) }
@@ -48,12 +50,15 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #edit' do
-    sign_in_user
+    before do
+      @request.env['devise.mapping'] = Devise.mappings[:user]
+      sign_in user
 
-    before { get :edit, id: question }
+      get :edit, id: user_question
+    end
 
     it 'assigns the requested question to @question' do
-      expect(assigns(:question)).to eq question
+      expect(assigns(:question)).to eq user_question
     end
 
     it 'renders edit vew' do
@@ -66,8 +71,7 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'with valid attributes' do
       it 'saves the new question in the database' do
-        expect { post :create, question: attributes_for(:question) }
-          .to change(Question, :count).by(1)
+        expect { post :create, question: attributes_for(:question) }.to change(Question, :count).by(1)
       end
 
       it 'redirect to show view' do
@@ -90,34 +94,38 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'PATCH #update' do
-    sign_in_user
+    before do
+      @request.env['devise.mapping'] = Devise.mappings[:user]
+      sign_in user
+    end
 
     context 'with valid attributes' do
-      it 'assigns the requested question to @question' do
-        patch :update, id: question, question: attributes_for(:question)
-        expect(assigns(:question)).to eq question
-      end
-
       it 'changes question attributes' do
-        patch :update, id: question, question: { title: 'new title', body: 'new body' }
-        question.reload
-        expect(question.title).to eq 'new title'
-        expect(question.body).to eq 'new body'
+        patch :update, id: user_question,
+                       question: { title: 'test title', body: 'test body' }
+        user_question.reload
+        expect(user_question.title).to eq 'test title'
+        expect(user_question.body).to eq 'test body'
       end
 
       it 'redirects to the updated question' do
-        patch :update, id: question, question: attributes_for(:question)
-        expect(response).to redirect_to question
+        patch :update, id: user_question,
+                       question: { title: 'test title', body: 'test body' }
+        expect(response).to redirect_to user_question
       end
     end
 
     context 'with invalid attributes' do
-      before { patch :update, id: question, question: { title: 'new title', body: nil } }
+      before do
+        @old_question = user_question.dup
+        patch :update, id: user_question,
+                       question: { title: 'test title', body: nil }
+      end
 
       it 'does not change question attributes' do
-        question.reload
-        expect(question.title).to eq 'MyString'
-        expect(question.body).to eq 'MyText'
+        user_question.reload
+        expect(user_question.title).to eq @old_question.title
+        expect(user_question.body).to eq @old_question.body
       end
 
       it 're-render edit view' do
@@ -127,17 +135,20 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    sign_in_user
-
-    before { question }
+    before do
+      @request.env['devise.mapping'] = Devise.mappings[:user]
+      sign_in user
+      user_question
+    end
 
     it 'deletes question' do
-      expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
+      expect { delete :destroy, id: user_question }.to change(Question, :count).by(-1)
     end
 
     it 'redirect to index view' do
-      delete :destroy, id: question
+      delete :destroy, id: user_question
       expect(response).to redirect_to questions_path
     end
   end
 end
+

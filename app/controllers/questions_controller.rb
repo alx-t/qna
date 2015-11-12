@@ -1,23 +1,28 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index]
-  before_action :load_question, only: [:show, :edit, :update, :destroy]
+  before_action :load_question, only: [:edit, :update, :destroy]
 
   def index
     @questions = Question.all
   end
 
   def show
+    @question = Question.find(params[:id])
   end
 
   def new
-    @question = Question.new
+    @question = current_user.questions.new
   end
 
   def edit
+    if @question.nil?
+      flash[:danger] = "You can not edit this question"
+      redirect_to questions_path
+    end
   end
 
   def create
-    @question = Question.new(question_params)
+    @question = current_user.questions.new(question_params)
 
     if @question.save
       flash[:success] = "Your question successfully created."
@@ -29,6 +34,7 @@ class QuestionsController < ApplicationController
 
   def update
     if @question.update(question_params)
+      flash[:success] = "Your question successfully changed"
       redirect_to @question
     else
       render :edit
@@ -36,17 +42,26 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question.destroy
-    redirect_to questions_path
+    if @question.nil?
+      flash[:danger] = "You can not delete this question"
+      redirect_to questions_path
+    else
+      current_user.questions.destroy(@question)
+      flash[:success] = "Your question successfully deleted"
+      redirect_to questions_path
+    end
   end
 
   private
 
   def load_question
-    @question = Question.find(params[:id])
+    @question = current_user.questions.find(params[:id])
+  rescue ActiveRecord::RecordNotFound => e
+    @question = nil
   end
 
   def question_params
     params.require(:question).permit(:title, :body)
   end
 end
+
