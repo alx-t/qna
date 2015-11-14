@@ -1,10 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:question) { create(:question) }
-  let(:answer) { create(:answer, question: question) }
+  let(:user) { create :user }
+  let(:question) { create :question }
+  let(:answer) { create :answer, question: question }
+  let(:user_answer) { create :answer, question: question, user: user }
 
   describe 'GET #new' do
+    sign_in_user
+
     before { get :new, question_id: question }
 
     it 'assigns a new Answer to @answer' do
@@ -17,10 +21,14 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'GET #edit' do
-    before { get :edit, id: answer, question_id: question }
+    before do
+      @request.env['devise.mapping'] = Devise.mappings[:user]
+      sign_in user
+      get :edit, id: user_answer, question_id: question
+    end
 
     it 'assigns the requested answer to @answer' do
-      expect(assigns(:answer)).to eq answer
+      expect(assigns(:answer)).to eq user_answer
     end
 
     it 'renders edit view' do
@@ -29,6 +37,8 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'POST #create' do
+    sign_in_user
+
     context 'with valid attributes' do
       it 'saves the new answer in th database' do
         expect do
@@ -63,20 +73,24 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'PATCH #update' do
-    context 'with valid attributes' do
-      it 'assign the requested answer to @answer' do
-        patch :update, id: answer, question_id: question, answer: attributes_for(:answer)
-        expect(assigns(:answer)).to eq answer
-      end
+    before do
+      @request.env['devise.mapping'] = Devise.mappings[:user]
+      sign_in user
+    end
 
+    context 'with valid attributes' do
       it 'changes answer attributes' do
-        patch :update, id: answer, question_id: question, answer: { body: 'new body' }
-        answer.reload
-        expect(answer.body).to eq 'new body'
+        patch :update, id: user_answer,
+                       question_id: question,
+                       answer: { body: 'new body' }
+        user_answer.reload
+        expect(user_answer.body).to eq 'new body'
       end
 
       it 'redirects to the question' do
-        patch :update, id: answer, question_id: question, answer: attributes_for(:answer)
+        patch :update, id: user_answer,
+                       question_id: question,
+                       answer: { body: 'new body' }
         expect(response).to redirect_to question
       end
     end
@@ -101,15 +115,19 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    before { answer }
+    before do
+      @request.env['devise.mapping'] = Devise.mappings[:user]
+      sign_in user
+      user_answer
+    end
 
     it 'deletes answer' do
-      expect { delete :destroy, id: answer, question_id: question }
+      expect { delete :destroy, id: user_answer, question_id: question }
         .to change(Answer, :count).by(-1)
     end
 
     it 'redirects to question' do
-      delete :destroy, id: answer, question_id: question
+      delete :destroy, id: user_answer, question_id: question
       expect(response).to redirect_to question
     end
   end

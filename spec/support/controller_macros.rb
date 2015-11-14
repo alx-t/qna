@@ -8,10 +8,8 @@ module ControllerMacros
   end
 
   def log_in(user)
-    before do
-      @request.env['devise.mapping'] = Devise.mappings[:user]
-      sign_in user
-    end
+    @request.env['devise.mapping'] = Devise.mappings[:user]
+    sign_in user
   end
 end
 

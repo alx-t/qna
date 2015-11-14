@@ -50,10 +50,12 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #edit' do
+
+    #before { log_in(user) }
+
     before do
       @request.env['devise.mapping'] = Devise.mappings[:user]
       sign_in user
-
       get :edit, id: user_question
     end
 

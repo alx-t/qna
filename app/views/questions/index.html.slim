@@ -14,5 +14,6 @@ table.table.table-striped
           = link_to 'View', question
           br
 
-= link_to 'Ask question', new_question_path
+- if current_user
+  = link_to 'Ask question', new_question_path
 

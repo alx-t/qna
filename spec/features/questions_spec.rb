@@ -18,11 +18,15 @@ feature 'Question stories', %q{
     fill_in 'Body', with: 'Test question body'
     click_on 'Create'
     expect(page).to have_content 'Your question successfully created.'
+    expect(page).to have_content 'Test question body'
+    expect(page.status_code).to eq 200
   end
 
   scenario 'Non-authenticated user tries to create question' do
     visit questions_path
-    click_on 'Ask question'
+    expect(page).to_not have_content 'Ask question'
+
+    visit new_question_path
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
 
@@ -42,8 +46,7 @@ feature 'Question stories', %q{
 
   scenario 'Non-authenticated user tries to delete question' do
     visit question_path smb_question
-    click_on 'Delete'
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(page).to_not have_content 'Delete'
   end
 
   scenario 'Authenticated user edits his own question' do
@@ -55,6 +58,7 @@ feature 'Question stories', %q{
     click_on 'Create'
     expect(page).to have_content 'New title'
     expect(page).to have_content 'Your question successfully changed'
+    expect(page.status_code).to eq 200
   end
 
   scenario 'Authenticates user tries to edit smb question' do
@@ -65,17 +69,20 @@ feature 'Question stories', %q{
   end
 
   scenario 'Non-authenticated user tries to edit question' do
+    visit question_path smb_question
+    expect(page).to_not have_content 'Edit'
+
     visit edit_question_path smb_question
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
 
-  scenario 'User view list of questions' do
+  scenario 'User reviews list of questions' do
     visit questions_path
     expect(page).to have_content user_question.title
     expect(page).to have_content smb_question.title
   end
 
-  scenario 'User view the question' do
+  scenario 'User reviews the question' do
     visit question_path smb_question
     expect(page).to have_content smb_question.title
     expect(page).to have_content smb_question.body

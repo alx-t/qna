@@ -55,9 +55,7 @@ class QuestionsController < ApplicationController
   private
 
   def load_question
-    @question = current_user.questions.find(params[:id])
-  rescue ActiveRecord::RecordNotFound => e
-    @question = nil
+    @question = current_user.questions.find_by(id: params[:id])
   end
 
   def question_params
