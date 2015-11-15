@@ -22,8 +22,7 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'GET #edit' do
     before do
-      @request.env['devise.mapping'] = Devise.mappings[:user]
-      sign_in user
+      log_in user
       get :edit, id: user_answer, question_id: question
     end
 
@@ -74,8 +73,7 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'PATCH #update' do
     before do
-      @request.env['devise.mapping'] = Devise.mappings[:user]
-      sign_in user
+      log_in user
     end
 
     context 'with valid attributes' do
@@ -116,8 +114,7 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'DELETE #destroy' do
     before do
-      @request.env['devise.mapping'] = Devise.mappings[:user]
-      sign_in user
+      log_in user
       user_answer
     end
 

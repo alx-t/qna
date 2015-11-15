@@ -57,7 +57,10 @@ feature 'Answer stories', %q{
 
     sign_in user
     visit question_path question
-    find('.table').click_on 'Edit'
+    #find('.table').click_on 'Edit'
+    within('.table') { expect(page).to_not have_content 'Edit' }
+
+    visit edit_question_answer_path question, answer
     expect(page).to have_content 'You can not edit this answer'
   end
 
@@ -85,8 +88,8 @@ feature 'Answer stories', %q{
 
     sign_in(user)
     visit question_path question
-    find('.table').click_on 'Delete'
-    expect(page).to have_content 'You can not delete this answer'
+    #find('.table').click_on 'Delete'
+    within('.table') { expect(page).to_not have_content 'Delete' }
   end
 
   scenario 'Non-authenticated user tries to delete answer' do

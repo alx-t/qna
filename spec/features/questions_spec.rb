@@ -40,8 +40,7 @@ feature 'Question stories', %q{
   scenario 'Authenticates user tries to delete smb question' do
     sign_in(user)
     visit question_path smb_question
-    click_on 'Delete'
-    expect(page).to have_content 'You can not delete this question'
+    expect(page).to_not have_content 'Delete'
   end
 
   scenario 'Non-authenticated user tries to delete question' do
@@ -64,7 +63,9 @@ feature 'Question stories', %q{
   scenario 'Authenticates user tries to edit smb question' do
     sign_in(user)
     visit question_path smb_question
-    click_on 'Edit'
+    expect(page).to_not have_content 'Edit'
+
+    visit edit_question_path smb_question
     expect(page).to have_content 'You can not edit this question'
   end
 
