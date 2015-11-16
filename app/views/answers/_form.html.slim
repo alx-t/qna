@@ -1,4 +1,4 @@
-= simple_form_for [question, answer] do |f|
+= simple_form_for [question, answer], remote: true do |f|
   = f.input :body, label: 'Body'
-  .btn = f.submit 'Submit'
+  .btn = f.submit 'Add answer'
 

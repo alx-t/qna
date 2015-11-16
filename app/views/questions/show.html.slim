@@ -1,32 +1,24 @@
 h3
   = @question.title
 hr
-.container-fluid
-  = @question.body
-  br
-  - if current_user == @question.user
-    =<> link_to 'Edit', edit_question_path(@question)
-    =<> link_to 'Delete', @question, data: { confirm: 'Sure?' }, method: :delete
-  hr
-  = link_to 'Back', questions_path
-  hr
+= @question.body
+br
+.row
+  - if current_user && current_user == @question.user
+    .col-md-1
+      =<> link_to 'Edit', edit_question_path(@question)
+    .col-md-1
+      =<> link_to 'Delete', @question, data: { confirm: 'Sure?' }, method: :delete
+  .col-md-1
+    = link_to 'Back', questions_path
+hr
 
-  - if @question.answers.any?
-    h4 #{@question.answers.count} Answers
-    table.table.table-striped.answers
-      tbody
-        - @question.answers.each do |answer|
-          tr
-            td = answer.body
-            td
-              - if current_user == answer.user
-                = link_to 'Edit', edit_question_answer_path(id: answer, 
-                           question_id: @question)
-                br
-                = link_to 'Delete', [@question, answer], 
-                           data: { confirm: 'Sure?' }, 
-                           method: :delete
+.container-fluid
+  .answers
+    - if @question.answers.any?
+      h4 #{@question.answers.count} Answers
+      = render @question.answers
 
   - if current_user
-    =<> link_to 'Add answer', new_question_answer_path(question_id: @question)
+    = render 'answers/form', question: @question, answer: @answer
 

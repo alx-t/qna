@@ -19,7 +19,7 @@ class AnswersController < ApplicationController
 
     if @answer.save
       flash[:success] = "Your answer successfully created"
-      redirect_to @question
+      #redirect_to @question
     else
       p @answer.errors
       render :new

@@ -10,7 +10,7 @@ html
       nav.navbar.navbar-default
         .container-fluid
           .navbar-brand
-            = link_to 'Link 1', '#'
+            = link_to 'Home', root_path
           ul.nav.navbar-nav.navbar-right
             - if current_user
               li = link_to 'Log out', destroy_user_session_path, method: :delete
@@ -20,5 +20,6 @@ html
 
       = render 'shared/notice'
 
-      = yield
+      .col-md-10
+        = yield
 

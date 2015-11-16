@@ -19,15 +19,13 @@ feature 'Answer stories', %q{
     expect(page).to have_content answer.body
   end
 
-  scenario 'Authenticated user creates answer' do
+  scenario 'Authenticated user creates answer', js: true do
     sign_in user
     visit question_path question
-    click_on 'Add answer'
     fill_in 'Body', with: 'Test answer body'
-    click_on 'Submit'
-    expect(page).to have_content 'Your answer successfully created'
+    click_on 'Add answer'
+    #expect(page).to have_content 'Your answer successfully created'
     expect(page).to have_content 'Test answer body'
-    expect(page.status_code).to eq 200
   end
 
   scenario 'Non-authenticated user tries to create answer' do
@@ -46,7 +44,7 @@ feature 'Answer stories', %q{
     find('.answers').click_on('Edit')
 
     fill_in 'Body', with: 'New answer body'
-    click_on 'Submit'
+    click_on 'Add answer'
     expect(page).to have_content 'New answer body'
     expect(page).to have_content 'Your answer successfully changed'
     expect(page.status_code).to eq 200
