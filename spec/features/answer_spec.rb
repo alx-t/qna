@@ -43,7 +43,7 @@ feature 'Answer stories', %q{
 
     sign_in user
     visit question_path question
-    find('.table').click_on('Edit')
+    find('.answers').click_on('Edit')
 
     fill_in 'Body', with: 'New answer body'
     click_on 'Submit'
@@ -57,8 +57,7 @@ feature 'Answer stories', %q{
 
     sign_in user
     visit question_path question
-    #find('.table').click_on 'Edit'
-    within('.table') { expect(page).to_not have_content 'Edit' }
+    within('.answers') { expect(page).to_not have_content 'Edit' }
 
     visit edit_question_answer_path question, answer
     expect(page).to have_content 'You can not edit this answer'
@@ -79,7 +78,7 @@ feature 'Answer stories', %q{
 
     sign_in(user)
     visit question_path question
-    find('.table').click_on 'Delete'
+    find('.answers').click_on 'Delete'
     expect(page).to have_content 'Your answer successfully deleted'
   end
 
@@ -88,8 +87,7 @@ feature 'Answer stories', %q{
 
     sign_in(user)
     visit question_path question
-    #find('.table').click_on 'Delete'
-    within('.table') { expect(page).to_not have_content 'Delete' }
+    within('.answers') { expect(page).to_not have_content 'Delete' }
   end
 
   scenario 'Non-authenticated user tries to delete answer' do
