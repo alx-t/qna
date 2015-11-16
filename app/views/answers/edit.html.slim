@@ -1,4 +1,7 @@
 h3 Edit answer
-= render 'form', question: @question, answer: @answer
+= simple_form_for [@question, @answer] do |f|
+  = f.input :body, label: 'Body'
+  .btn = f.submit 'Add answer'
+/= render 'form', question: @question, answer: @answer
 = link_to 'Back', question_path(@question)
 

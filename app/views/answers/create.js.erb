@@ -1,3 +1,4 @@
 $('.answers').append('<%= j render 'answer', answer: @answer %>');
 $('#answer_body').val('');
+$('.notice').html('<%= j render partial: 'shared/notice'  %>');
 

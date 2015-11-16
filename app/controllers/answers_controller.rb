@@ -18,10 +18,10 @@ class AnswersController < ApplicationController
     @answer = current_user.answers.build(answer_params)
 
     if @answer.save
-      flash[:success] = "Your answer successfully created"
-      #redirect_to @question
+      respond_to do |format|
+        format.js { flash[:success] = "Your answer successfully created" }
+      end
     else
-      p @answer.errors
       render :new
     end
   end
@@ -39,7 +39,6 @@ class AnswersController < ApplicationController
     if @answer.user == current_user
       @answer.destroy
       flash[:success] = "Your answer successfully deleted"
-      redirect_to @question
     else
       flash[:danger] = "You can not delete this answer"
       redirect_to question_path @question

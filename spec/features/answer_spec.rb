@@ -24,7 +24,6 @@ feature 'Answer stories', %q{
     visit question_path question
     fill_in 'Body', with: 'Test answer body'
     click_on 'Add answer'
-    #expect(page).to have_content 'Your answer successfully created'
     expect(page).to have_content 'Test answer body'
   end
 
@@ -47,7 +46,6 @@ feature 'Answer stories', %q{
     click_on 'Add answer'
     expect(page).to have_content 'New answer body'
     expect(page).to have_content 'Your answer successfully changed'
-    expect(page.status_code).to eq 200
   end
 
   scenario 'Authenticated user tries to edit smb answer' do
@@ -71,7 +69,7 @@ feature 'Answer stories', %q{
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
 
-  scenario 'Authenticated user deletes his own answer' do
+  scenario 'Authenticated user deletes his own answer', js: true do
     user_answer
 
     sign_in(user)
