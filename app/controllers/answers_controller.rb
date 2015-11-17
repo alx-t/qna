@@ -14,9 +14,9 @@ class AnswersController < ApplicationController
     @answer = current_user.answers.build(answer_params)
 
     if @answer.save
-      flash[:success] = "Your answer successfully created"
+      flash.now[:success] = "Your answer successfully created"
     else
-      flash[:danger] = "Errors: #{@answer.errors.full_messages}"
+      flash.now[:danger] = "Errors: #{@answer.errors.full_messages}"
     end
   end
 
@@ -32,9 +32,9 @@ class AnswersController < ApplicationController
   def destroy
     if @answer.user == current_user
       @answer.destroy
-      flash[:success] = "Your answer successfully deleted"
+      flash.now[:success] = "Your answer successfully deleted"
     else
-      flash[:danger] = "You can not delete this answer"
+      flash.now[:danger] = "You can not delete this answer"
       #redirect_to question_path @question
     end
   end
