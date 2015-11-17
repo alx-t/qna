@@ -1,4 +1,7 @@
-$('.answers').append('<%= j render 'answer', answer: @answer %>');
-$('#answer_body').val('');
+<% if @answer.valid? %>
+  $('.answers').append('<%= j render 'answer', answer: @answer %>');
+  $('#answer_body').val('');
+<% end %>
+
 $('.notice').html('<%= j render partial: 'shared/notice'  %>');
 

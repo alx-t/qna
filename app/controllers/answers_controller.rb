@@ -3,10 +3,6 @@ class AnswersController < ApplicationController
   before_action :load_question
   before_action :load_answer, only: [:edit, :update, :destroy]
 
-  def new
-    @answer = @question.answers.new
-  end
-
   def edit
     unless @answer.user == current_user
       flash[:danger] = "You can not edit this answer"
@@ -18,11 +14,9 @@ class AnswersController < ApplicationController
     @answer = current_user.answers.build(answer_params)
 
     if @answer.save
-      respond_to do |format|
-        format.js { flash[:success] = "Your answer successfully created" }
-      end
+      flash[:success] = "Your answer successfully created"
     else
-      render :new
+      flash[:danger] = "Errors: #{@answer.errors.full_messages}"
     end
   end
 
@@ -41,7 +35,7 @@ class AnswersController < ApplicationController
       flash[:success] = "Your answer successfully deleted"
     else
       flash[:danger] = "You can not delete this answer"
-      redirect_to question_path @question
+      #redirect_to question_path @question
     end
   end
 

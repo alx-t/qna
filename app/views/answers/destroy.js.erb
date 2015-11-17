@@ -1,4 +1,6 @@
 <% if @answer.destroyed? %>
-  $('.notice').html('<%= j render partial: 'shared/notice'  %>');
   $('div#answer-id-<%= @answer.id %>').remove();
 <% end %>
+
+$('.notice').html('<%= j render partial: 'shared/notice'  %>');
+
