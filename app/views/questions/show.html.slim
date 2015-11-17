@@ -4,7 +4,7 @@ hr
 = @question.body
 br
 .row
-  - if current_user && current_user == @question.user
+  - if user_author_of? @question
     .col-md-1
       =<> link_to 'Edit', edit_question_path(@question)
     .col-md-1
@@ -19,6 +19,6 @@ hr
       h4 #{@question.answers.count} Answers
       = render @question.answers
 
-  - if current_user
+  - if user_signed_in?
     = render 'answers/form', question: @question, answer: @answer
 

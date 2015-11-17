@@ -1,7 +1,7 @@
 .row
   div id="answer-id-#{answer.id}"
     = answer.body
-    - if current_user && current_user == answer.user
+    - if user_author_of?(answer) 
       .row
         .col-md-1
           = link_to 'Edit', 
