@@ -1,4 +1,5 @@
-require 'rails_helper'
+#require 'rails_helper'
+require_relative 'acceptance_helper'
 
 
 feature 'Answer stories', %q{
