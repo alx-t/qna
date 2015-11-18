@@ -14,15 +14,15 @@ feature 'Edit answer', %q{
   describe 'Authenticated user' do
     before do
       sign_in user
-      #visit question_path question
     end
 
-    scenario 'tries to edit his own answer' do
+    scenario 'tries to edit his own answer', js: true do
       user_answer
       visit question_path question
 
       within('.answers') do
         expect(page).to have_link 'Edit'
+
         click_on 'Edit'
 
         fill_in 'Body', with: 'New answer body'
@@ -30,11 +30,19 @@ feature 'Edit answer', %q{
 
         expect(page).to_not have_content user_answer.body
         expect(page).to have_content 'New answer body'
-        expect(page).to_not have_selector rextarea
+        expect(page).to_not have_selector 'textarea'
       end
     end
 
-    scenario 'tries to edit smb answer'
+    scenario 'tries to edit smb answer' do
+      answer
+
+      visit question_path question
+      within('.answers') { expect(page).to_not have_content 'Edit' }
+
+      visit edit_question_answer_path question, answer
+      expect(page).to have_content 'You can not edit this answer'
+    end
   end
 
   scenario 'Non-authenticated user tries to edit answer' do

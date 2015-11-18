@@ -1,6 +1,4 @@
-#require 'rails_helper'
 require_relative 'acceptance_helper'
-
 
 feature 'Answer stories', %q{
   In order to working with answers
@@ -34,30 +32,6 @@ feature 'Answer stories', %q{
 
     visit new_question_answer_path question
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
-  end
-
-  scenario 'Authenticated user edits his own answer' do
-    user_answer
-
-    sign_in user
-    visit question_path question
-    find('.answers').click_on('Edit')
-
-    fill_in 'Body', with: 'New answer body'
-    click_on 'Add answer'
-    expect(page).to have_content 'New answer body'
-    expect(page).to have_content 'Your answer successfully changed'
-  end
-
-  scenario 'Authenticated user tries to edit smb answer' do
-    answer
-
-    sign_in user
-    visit question_path question
-    within('.answers') { expect(page).to_not have_content 'Edit' }
-
-    visit edit_question_answer_path question, answer
-    expect(page).to have_content 'You can not edit this answer'
   end
 
   scenario 'Authenticated user deletes his own answer', js: true do

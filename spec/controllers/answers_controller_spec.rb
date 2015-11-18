@@ -69,16 +69,18 @@ RSpec.describe AnswersController, type: :controller do
       it 'changes answer attributes' do
         patch :update, id: user_answer,
                        question_id: question,
+                       format: :js,
                        answer: { body: 'new body' }
         user_answer.reload
         expect(user_answer.body).to eq 'new body'
       end
 
-      it 'redirects to the question' do
+      it 'render update template' do
         patch :update, id: user_answer,
                        question_id: question,
+                       format: :js,
                        answer: { body: 'new body' }
-        expect(response).to redirect_to question
+        expect(response).to render_template :update
       end
     end
 
@@ -87,6 +89,7 @@ RSpec.describe AnswersController, type: :controller do
         patch :update,
               id: answer,
               question_id: question,
+              format: :js,
               answer: { body: nil }
       end
 
@@ -95,8 +98,8 @@ RSpec.describe AnswersController, type: :controller do
         expect(answer.body).to eq 'MyText'
       end
 
-      it 're-render edit view' do
-        expect(response).to render_template :edit
+      it 'render template update' do
+        expect(response).to render_template :update
       end
     end
   end
