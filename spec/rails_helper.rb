@@ -7,7 +7,7 @@ require 'spec_helper'
 require 'rspec/rails'
 
 require 'shoulda/matchers'
-#require 'capybara/poltergeist'
+require 'capybara/poltergeist'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -60,7 +60,7 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 
-  #Capybara.javascript_driver = :poltergeist
+  Capybara.javascript_driver = :poltergeist
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
