@@ -60,16 +60,6 @@ feature 'Answer stories', %q{
     expect(page).to have_content 'You can not edit this answer'
   end
 
-  scenario 'Non-authenticated user tries to edit answer' do
-    answer
-
-    visit question_path question
-    expect(page).to_not have_content 'Edit'
-
-    visit edit_question_answer_path question, answer
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
-  end
-
   scenario 'Authenticated user deletes his own answer', js: true do
     user_answer
 

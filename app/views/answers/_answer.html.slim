@@ -3,13 +3,19 @@
     = answer.body
     - if user_author_of?(answer) 
       .row
+        = simple_form_for [answer.question, answer],
+          remote: true,
+          html: { class: 'answer-edit', id: "edit-answer-#{answer.id}" } do |f|
+          = f.input :body, label: 'Answer'
+          .btn = f.submit 'Save'
         .col-md-1
-          = link_to 'Edit', 
-            edit_question_answer_path(question_id: answer.question, id: answer)
+          = link_to 'Edit', '',
+              class: 'edit-answer-link',
+              data: { answer_id: answer.id }
         .col-md-1
           = link_to 'Delete', 
-            [answer.question, answer], 
-            remote: true,
-            method: :delete
+              [answer.question, answer], 
+              remote: true,
+              method: :delete
     hr
-/ data: { confirm: 'Sure?' }, 
+

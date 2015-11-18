@@ -2,15 +2,14 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-#ready = ->
-#  $('.edit-answer-link').click (e) -> 
-    #e.preventDefault();
-    #$(this).hide();
-    #answer_id = $(this).data('answerId')
-#    alert 'answer_id ' +answer_id
-    #$('form#edit-answer-' + answer_id).show()
+ready = ->
+  $('.edit-answer-link').click (e) -> 
+    e.preventDefault();
+    $(this).hide();
+    answer_id = $(this).data('answerId')
+    $('form#edit-answer-' + answer_id).show()
 
-#$(document).ready(ready)
-#$(document).on('page:load', ready)
-#$(document).on('page:update', ready)
+$(document).ready(ready)
+$(document).on('page:load', ready)
+$(document).on('page:update', ready)
 

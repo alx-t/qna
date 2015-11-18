@@ -22,10 +22,9 @@ class AnswersController < ApplicationController
 
   def update
     if @answer.update(answer_params)
-      flash[:success] = "Your answer successfully changed"
-      redirect_to @question
+      flash.now[:success] = "Your answer successfully changed"
     else
-      render :edit
+      flash.now[:danger] = "Errors: #{@answer.errors.full_messages}"
     end
   end
 
@@ -35,7 +34,6 @@ class AnswersController < ApplicationController
       flash.now[:success] = "Your answer successfully deleted"
     else
       flash.now[:danger] = "You can not delete this answer"
-      #redirect_to question_path @question
     end
   end
 
@@ -53,3 +51,4 @@ class AnswersController < ApplicationController
     params.require(:answer).permit(:question_id, :body).merge(question: @question)
   end
 end
+
