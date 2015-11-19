@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :load_question
-  before_action :load_answer, only: [:edit, :update, :destroy]
+  before_action :load_answer, only: [:edit, :update, :destroy, :set_best]
 
   def edit
     unless @answer.user == current_user
@@ -35,6 +35,10 @@ class AnswersController < ApplicationController
     else
       flash.now[:danger] = "You can not delete this answer"
     end
+  end
+
+  def set_best
+    @answer.set_best if @question.user == current_user
   end
 
   private

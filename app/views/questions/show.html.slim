@@ -14,9 +14,9 @@ br
 hr
 
 .container-fluid
-  .answers
-    - if @question.answers.any?
-      h4 #{@question.answers.count} Answers
+  - if @question.answers.any?
+    h4 #{@question.answers.count} Answers
+    .answers
       = render @question.answers
 
   - if user_signed_in?

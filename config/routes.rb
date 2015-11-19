@@ -5,7 +5,10 @@ Rails.application.routes.draw do
   root to: "questions#index"
 
   resources :questions do
-    resources :answers
+    resources :answers do
+      patch 'set_best', on: :member
+    end
   end
 
 end
+

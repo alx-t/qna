@@ -115,9 +115,42 @@ RSpec.describe AnswersController, type: :controller do
         .to change(Answer, :count).by(-1)
     end
 
-    it 'redirects to question' do
+    it 'render template destroy' do
       delete :destroy, id: user_answer, question_id: question, format: :js
       expect(response).to render_template :destroy
     end
   end
+
+  describe 'PATCH #set_best' do
+    let(:user_question) { create :question, user: user }
+    let(:user_question_answer) { create :answer, question: user_question }
+
+    context 'user is author of question' do
+      before do
+        log_in user
+        patch :set_best, question_id: user_question, id: user_question_answer, format: :js
+      end
+
+      it 'set best answer' do
+        user_question_answer.reload
+        expect(user_question_answer.is_best).to eq true
+      end
+
+      it 'render template best' do
+        expect(response).to render_template :set_best
+      end
+    end
+
+    context 'user is not author of question' do
+      it 'not set best answer' do
+        user_question_answer.reload
+        expect { patch :set_best,
+                        question_id: user_question,
+                        id: user_question_answer,
+                        format: :js }
+          .to_not change(user_question_answer, :is_best)
+      end
+    end
+  end
 end
+
