@@ -24,6 +24,7 @@ feature 'Best answer', %q{
 
       click_on 'Best answer'
       expect(page).to have_content 'The best answer'
+      expect(page).to_not have_link 'Best answer'
     end
 
     scenario 'not a question author tries to set best answer' do

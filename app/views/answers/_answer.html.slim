@@ -20,7 +20,7 @@
                 [answer.question, answer], 
                 remote: true,
                 method: :delete
-        - if user_signed_in? && current_user.id == answer.question.user_id
+        - if user_signed_in? && current_user.id == answer.question.user_id && !answer.is_best?
           .col-md-1
             = link_to 'Best answer', 
               set_best_question_answer_path(question_id: answer.question, id: answer),
