@@ -16,8 +16,20 @@ RSpec.describe Answer, type: :model do
     it { should belong_to :user }
   end
 
-  describe 'ordering' do
-    it 'last answer in the bottom, best - in the top' do
+  describe 'set best' do
+    it 'setting is_best to true' do
+      answers
+
+      expect(answers[0].is_best?).to eq false
+      answers[0].set_best
+      expect(answers[0].reload.is_best?).to eq true
+
+      answers[2].set_best
+      expect(answers[0].reload.is_best?).to eq false
+      expect(answers[2].reload.is_best?).to eq true
+    end
+
+    it 'ordering - last answer in the bottom, best - in the top' do
       answers
       best_answer
 
