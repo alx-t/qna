@@ -86,6 +86,7 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'with invalid attributes' do
       before do
+        @old_answer = answer
         patch :update,
               id: answer,
               question_id: question,
@@ -95,7 +96,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'does not change answer attributes' do
         answer.reload
-        expect(answer.body).to eq 'MyText'
+        expect(answer.body).to eq @old_answer.body
       end
 
       it 'render template update' do

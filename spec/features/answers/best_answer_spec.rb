@@ -38,7 +38,22 @@ feature 'Best answer', %q{
       expect(page).to_not have_link 'Best answer'
     end
 
-    scenario 'change best answer and the best answer is still first in list', js: true do
+    scenario 'best answer is the first in list', js: true do
+      user_question
+      answer_user_question
+      another_answer_user_question
+
+      visit question_path user_question
+
+      click_on "set-best-link-#{answer_user_question.id}"
+      expect(page.all('.answer p').first).to have_content answer_user_question.body
+
+      click_on "set-best-link-#{another_answer_user_question.id}"
+      sleep(2)
+      expect(page.all('.answer p').first).to have_content another_answer_user_question.body
+    end
+
+    scenario 'change best answer', js: true do
       user_question
       answer_user_question
       another_answer_user_question
@@ -50,7 +65,6 @@ feature 'Best answer', %q{
         expect(page).to have_content 'The best answer'
         expect(page).to_not have_link 'Best answer'
       end
-      expect(user_question.answers.first).to eq answer_user_question
       expect(page).to have_content('The best answer', count: 1)
 
       within "div#answer-id-#{another_answer_user_question.id}" do
@@ -58,7 +72,6 @@ feature 'Best answer', %q{
         expect(page).to have_content 'The best answer'
         expect(page).to_not have_link 'Best answer'
       end
-      expect(user_question.answers.first).to eq another_answer_user_question
 
       within "div#answer-id-#{answer_user_question.id}" do
         expect(page).to_not have_content 'The best answer'

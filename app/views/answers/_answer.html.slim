@@ -3,7 +3,7 @@
     div id="answer-id-#{answer.id}"
       - if answer.is_best?
         h4 The best answer 
-      = answer.body
+      p = answer.body
       .row
         - if user_author_of?(answer) 
           = simple_form_for [answer.question, answer],
@@ -25,6 +25,7 @@
             = link_to 'Best answer', 
               set_best_question_answer_path(question_id: answer.question, id: answer),
                 method: :patch,
-                remote: true
+                remote: true,
+                id: "set-best-link-#{answer.id}"
       hr
 
