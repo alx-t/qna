@@ -9,12 +9,8 @@ class Answer < ActiveRecord::Base
   def set_best
     ActiveRecord::Base.transaction do
       question.answers.update_all is_best: false
-      update(is_best: true)
+      update!(is_best: true)
     end
-  end
-
-  def is_best?
-    is_best
   end
 end
 

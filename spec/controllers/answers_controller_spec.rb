@@ -143,12 +143,12 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'user is not author of question' do
       it 'not set best answer' do
-        user_question_answer.reload
-        expect { patch :set_best,
+        expect {  patch :set_best,
                         question_id: user_question,
                         id: user_question_answer,
-                        format: :js }
-          .to_not change(user_question_answer, :is_best)
+                        format: :js
+                  user_question_answer.reload
+        }.to_not change(user_question_answer, :is_best)
       end
     end
   end
