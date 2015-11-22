@@ -22,7 +22,7 @@ gem 'simple_form'
 gem 'devise'
 
 group :development, :test do
-  gem 'byebug'
+  gem 'pry-byebug'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'spring-commands-rspec'
@@ -33,7 +33,6 @@ group :test do
   gem 'capybara'
   gem 'launchy'
   gem 'poltergeist'
-  #gem 'selenium-webdriver'
   gem 'database_cleaner'
 end
 

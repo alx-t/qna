@@ -39,6 +39,7 @@ class AnswersController < ApplicationController
 
   def set_best
     @answer.set_best if @question.user == current_user
+    flash.now[:success] = "Your best answer successfully selected"
   end
 
   private

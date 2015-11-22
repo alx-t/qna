@@ -26,6 +26,7 @@ feature 'Best answer', %q{
       expect(page).to have_link 'Best answer'
 
       click_on 'Best answer'
+      expect(page).to have_content 'Your best answer successfully selected'
       expect(page).to have_content 'The best answer'
       expect(page).to_not have_link 'Best answer'
     end
@@ -46,11 +47,14 @@ feature 'Best answer', %q{
       visit question_path user_question
 
       click_on "set-best-link-#{answer_user_question.id}"
-      expect(page.all('.answer p').first).to have_content answer_user_question.body
+      within('.answers .answer:first-child p') do
+        expect(page).to have_content answer_user_question.body
+      end
 
       click_on "set-best-link-#{another_answer_user_question.id}"
-      sleep(2)
-      expect(page.all('.answer p').first).to have_content another_answer_user_question.body
+      within('.answers .answer:first-child p') do
+        expect(page).to have_content another_answer_user_question.body
+      end
     end
 
     scenario 'change best answer', js: true do
