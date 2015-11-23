@@ -5,7 +5,9 @@ class Answer < ActiveRecord::Base
 
   validates :body, :question_id, :user_id, presence: true
 
-  accepts_nested_attributes_for :attachments, allow_destroy: true
+  accepts_nested_attributes_for :attachments,
+                                reject_if: :all_blank,
+                                allow_destroy: true
 
   default_scope -> { order(is_best: :desc).order(created_at: :asc) }
 
