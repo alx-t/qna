@@ -4,6 +4,11 @@
       - if answer.is_best?
         h4 The best answer 
       p = answer.body
+      - if answer.attachments.any?
+        p Attachments:
+        ul
+          - answer.attachments.each do |a|
+            li = link_to a.file.identifier, a.file.url
       .row
         - if user_author_of?(answer) 
           = simple_form_for [answer.question, answer],

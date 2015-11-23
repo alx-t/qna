@@ -55,7 +55,13 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    carrierwave (0.10.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
     cliver (0.3.2)
+    cocoon (1.2.6)
     codeclimate-test-reporter (0.4.8)
       simplecov (>= 0.7.1, < 1.0.0)
     coderay (1.1.0)
@@ -152,6 +158,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rake (10.4.2)
     rdoc (4.2.0)
+    remotipart (1.2.1)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
     rspec-core (3.4.0)
@@ -240,6 +247,8 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-sass
   capybara
+  carrierwave
+  cocoon
   codeclimate-test-reporter
   coffee-rails (~> 4.1.0)
   database_cleaner
@@ -253,6 +262,7 @@ DEPENDENCIES
   pry-byebug
   puma
   rails (= 4.2.4)
+  remotipart
   rspec-rails
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)

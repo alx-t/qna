@@ -14,6 +14,9 @@ RSpec.describe Answer, type: :model do
   describe 'associations tests' do
     it { should belong_to :question }
     it { should belong_to :user }
+    it { should have_many :attachments }
+
+    it { should accept_nested_attributes_for :attachments }
   end
 
   describe 'set best' do

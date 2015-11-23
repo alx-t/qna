@@ -1,4 +1,7 @@
 = simple_form_for [question, answer], remote: true do |f|
   = f.input :body, label: 'Body'
+  p Attachments:
+  p
+    = f.simple_fields_for :attachments do |a|
+      = a.input :file, as: :file, label: 'File'
   .btn = f.submit 'Add answer'
-

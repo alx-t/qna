@@ -53,7 +53,9 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:question_id, :body).merge(question: @question)
+    params.require(:answer)
+      .permit(:question_id, :body, attachments_attributes: [:file, :id, :_destroy])
+      .merge(question: @question)
   end
 end
 
