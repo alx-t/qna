@@ -11,10 +11,16 @@
             li = link_to a.file.identifier, a.file.url
       .row
         - if user_author_of?(answer) 
-          = simple_form_for [answer.question, answer],
+          = simple_form_for [@question, answer],
             remote: true,
             html: { class: 'answer-edit', id: "edit-answer-#{answer.id}" } do |f|
             = f.input :body, label: 'Answer'
+            p Attachments:
+            p
+              = f.simple_fields_for :attachments do |a|
+                = render 'shared/attachment_fields', f: a
+              .links
+                = link_to_add_association 'Add file', f, :attachments, partial: 'shared/attachment_fields'
             .btn = f.submit 'Save'
           .col-md-1
             = link_to 'Edit', '',

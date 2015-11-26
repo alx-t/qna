@@ -11,7 +11,7 @@ class AnswersController < ApplicationController
   end
 
   def create
-    @answer = current_user.answers.build(answer_params)
+    @answer = current_user.answers.build(answer_params.merge(question: @question))
 
     if @answer.save
       flash.now[:success] = "Your answer successfully created"
@@ -54,8 +54,7 @@ class AnswersController < ApplicationController
 
   def answer_params
     params.require(:answer)
-      .permit(:question_id, :body, attachments_attributes: [:file, :id, :_destroy])
-      .merge(question: @question)
+      .permit(:body, attachments_attributes: [:file, :id, :_destroy])
   end
 end
 

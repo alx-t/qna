@@ -11,6 +11,12 @@ FactoryGirl.define do
     title
     body
     user
+
+    factory :question_with_attachments, class: 'Question' do
+      after(:create) do |question|
+        question.attachments << create(:question_attachment)
+      end
+    end
   end
 
   factory :invalid_question, class: 'Question' do
