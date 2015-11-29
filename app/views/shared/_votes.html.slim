@@ -1,0 +1,10 @@
+| Votes:
+.question-votes-up
+.question-votes-down
+.question-votes-rating
+.question-votes-links
+  - if user_signed_in? && !(current_user.id == object.user_id)
+    = link_to 'Reset', '#'
+    = link_to 'Up', '#'
+    = link_to 'Down', '#'
+hr

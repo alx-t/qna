@@ -1,13 +1,15 @@
-h3
-  = @question.title
-hr
-= @question.body
-hr
-p Attachments:
-ul 
-  -@question.attachments.each do |a|
-    li = link_to a.file.identifier, a.file.url
-br
+.question
+  h3
+    = @question.title
+  hr
+  = @question.body
+  hr
+  .question-attachments
+    p Attachments:
+    ul 
+      -@question.attachments.each do |a|
+        li = link_to a.file.identifier, a.file.url
+  br
 .row
   - if user_author_of? @question
     .col-md-1
@@ -17,6 +19,8 @@ br
   .col-md-1
     = link_to 'Back', questions_path
 hr
+.row.question-votes
+  = render 'shared/votes', object: @question 
 
 .container-fluid
   - if @question.answers.any?
