@@ -157,5 +157,90 @@ RSpec.describe QuestionsController, type: :controller do
       expect(response).to redirect_to questions_path
     end
   end
+
+  describe 'PATCH #vote_up' do
+    before do
+      log_in user
+    end
+
+    it 'increase vote for smb question' do
+      patch :vote_up, id: question
+      question.reload
+      expect(question.votes.rating).to eq 1
+      expect(question.votes.upvotes).to eq 1
+    end
+
+    it 'response JSON' do
+      patch :vote_up, id: question
+      result = JSON.parse(response.body, symbolize_names: true)
+      expect(response.status).to eq 200
+      expect(result[:upvotes]).to eq 1
+      expect(result[:downvotes]).to eq 0
+      expect(result[:rating]).to eq 1
+    end
+
+    it 'not changed vote for own question' do
+      patch :vote_up, id: user_question
+      user_question.reload
+      expect(user_question.votes.rating).to eq 0
+      expect(user_question.votes.upvotes).to eq 0
+    end
+  end
+
+  describe 'PATCH #vote_down' do
+    before do
+      log_in user
+    end
+
+    it 'decrease vote for smb question' do
+      patch :vote_down, id: question
+      question.reload
+      expect(question.votes.rating).to eq -1
+      expect(question.votes.downvotes).to eq -1
+    end
+
+    it 'response JSON' do
+      patch :vote_down, id: question
+      result = JSON.parse(response.body, symbolize_names: true)
+      expect(response.status).to eq 200
+      expect(result[:upvotes]).to eq 0
+      expect(result[:downvotes]).to eq -1
+      expect(result[:rating]).to eq -1
+    end
+
+    it 'not changed vote for own question' do
+      patch :vote_down, id: user_question
+      user_question.reload
+      expect(user_question.votes.rating).to eq 0
+      expect(user_question.votes.upvotes).to eq 0
+    end
+  end
+
+  describe 'PATCH #vote_reset' do
+    before do
+      log_in user
+    end
+
+    it 'reset vote for smb question' do
+      patch :vote_up, id: question
+      question.reload
+      patch :vote_reset, id: question
+      question.reload
+      expect(question.votes.rating).to eq 0
+      expect(question.votes.upvotes).to eq 0
+    end
+
+    it 'response JSON' do
+      patch :vote_up, id: question
+      question.reload
+      patch :vote_reset, id: question
+      question.reload
+      result = JSON.parse(response.body, symbolize_names: true)
+      expect(response.status).to eq 200
+      expect(result[:upvotes]).to eq 0
+      expect(result[:downvotes]).to eq 0
+      expect(result[:rating]).to eq 0
+    end
+  end
 end
 
