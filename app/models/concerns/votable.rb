@@ -17,6 +17,10 @@ module Votable
     set_vote(user, :reset)
   end
 
+  def voted_for?(user)
+    votes.any? && votes.rating != 0
+  end
+
   private
 
   def set_vote(user, value)

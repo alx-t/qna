@@ -1,0 +1,17 @@
+.row
+  .col-md-2.question-votes-up 
+    | Upvotes: #{@object.upvotes}
+  .col-md-2.question-votes-down 
+    | Downvotes: #{@object.downvotes}
+  .col-md-2.question-votes-rating 
+    | Rating: #{@object.rating}
+  br
+.row.question-votes-links
+  .col-md-2
+    a href=@object.vote_up_url data-method="path" data-remote="true" Up
+  .col-md-2
+    a href=@object.vote_down_url data-method="path" data-remote="true" Down
+  .col-md-2
+    a href=@object.vote_reset_url data-method="path" data-remote="true" Reset
+hr
+
