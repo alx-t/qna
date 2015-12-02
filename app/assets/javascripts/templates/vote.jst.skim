@@ -7,11 +7,13 @@
     | Rating: #{@object.rating}
   br
 .row.question-votes-links
-  .col-md-2
-    a href=@object.vote_up_url data-method="path" data-remote="true" Up
-  .col-md-2
-    a href=@object.vote_down_url data-method="path" data-remote="true" Down
-  .col-md-2
-    a href=@object.vote_reset_url data-method="path" data-remote="true" Reset
+  - if @object.voted
+    .col-md-2
+      a href=@object.vote_reset_url data-method="patch" data-remote="true" Reset
+  - else
+    .col-md-2
+      a href=@object.vote_up_url data-method="patch" data-remote="true" Up
+    .col-md-2
+      a href=@object.vote_down_url data-method="patch" data-remote="true" Down
 hr
 
