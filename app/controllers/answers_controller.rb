@@ -3,6 +3,8 @@ class AnswersController < ApplicationController
   before_action :load_question
   before_action :load_answer, only: [:edit, :update, :destroy, :set_best]
 
+  include Voted
+
   def edit
     unless @answer.user == current_user
       flash[:danger] = "You can not edit this answer"

@@ -153,5 +153,77 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  describe 'PATCH #vote_up' do
+    before do
+      log_in user
+    end
+
+    it 'increase vote for smb answer' do
+      patch :vote_up, id: answer, question_id: question, format: :json
+      answer.reload
+      expect(answer.votes.rating).to eq 1
+      expect(answer.votes.upvotes).to eq 1
+    end
+
+    it 'renders vote.json.jbuilder' do
+      patch :vote_up, id: answer, question_id: question, format: :json
+      expect(response).to render_template :vote
+    end
+
+    it 'not changed vote for own answer' do
+      patch :vote_up, id: user_answer, question_id: user_answer.question_id, format: :json
+      user_answer.reload
+      expect(user_answer.votes.rating).to eq 0
+      expect(user_answer.votes.upvotes).to eq 0
+    end
+  end
+
+  describe 'PATCH #vote_down' do
+    before do
+      log_in user
+    end
+
+    it 'decrease vote for smb answer' do
+      patch :vote_down, id: answer, question_id: question, format: :json
+      answer.reload
+      expect(answer.votes.rating).to eq -1
+      expect(answer.votes.downvotes).to eq -1
+    end
+
+    it 'renders vote.json.jbuilder' do
+      patch :vote_down, id: answer, question_id: question, format: :json
+      expect(response).to render_template :vote
+    end
+
+    it 'not changed vote for own answer' do
+      patch :vote_down, id: user_answer, question_id: user_answer.question_id, format: :json
+      user_answer.reload
+      expect(user_answer.votes.rating).to eq 0
+      expect(user_answer.votes.upvotes).to eq 0
+    end
+  end
+
+  describe 'PATCH #vote_reset' do
+    before do
+      log_in user
+    end
+
+    it 'reset vote for smb answer' do
+      patch :vote_up, id: answer, question_id: question, format: :json
+      answer.reload
+      patch :vote_reset, id: answer, question_id: question, format: :json
+      answer.reload
+      expect(answer.votes.rating).to eq 0
+      expect(answer.votes.upvotes).to eq 0
+    end
+
+    it 'renders vote.json.jbuilder' do
+      patch :vote_up, id: answer, question_id: question, format: :json
+      answer.reload
+      patch :vote_reset, id: answer, question_id: question, format: :json
+      expect(response).to render_template :vote
+    end
+  end
 end
 

@@ -7,6 +7,3 @@ $ ->
     question = $.parseJSON(xhr.responseText)
     $('.question-votes').html(JST["templates/vote"]({object: question}))
 
-  $('.question-votes').bind 'ajax:error', (e, data, status, xhr) ->
-    alert "error"
-

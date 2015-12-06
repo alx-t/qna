@@ -21,21 +21,11 @@ module Voted
 
   def set_vote(value)
     @votable = model_klass.find(params[:id])
-    #instance_variable_set("@#{controller_name.singularize}", @votable)
-    #instance_variable_get("@#{controller_name.singularize}").send("vote_#{value}", current_user)
-    #if current_user.id == @votable.user_id
-      #flash.now[:danger] = "You can not vote this question"
-      #render :vote
-      #return
-    #end
-    @votable.send("vote_#{value}", current_user)
-    if @votable.valid?
-      #flash.now[:success] = "Your question successfully created."
-      render :vote
-    else
-      #flash.now[:danger] = "Errors: #{@answer.errors.full_messages}"
-      render :vote
+
+    unless current_user.id == @votable.user_id
+      @votable.send("vote_#{value}", current_user)
     end
+    render :vote
   end
 end
 

@@ -164,23 +164,19 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     it 'increase vote for smb question' do
-      patch :vote_up, id: question
+      patch :vote_up, id: question, format: :json
       question.reload
       expect(question.votes.rating).to eq 1
       expect(question.votes.upvotes).to eq 1
     end
 
-    it 'response JSON' do
-      patch :vote_up, id: question
-      result = JSON.parse(response.body, symbolize_names: true)
-      expect(response.status).to eq 200
-      expect(result[:upvotes]).to eq 1
-      expect(result[:downvotes]).to eq 0
-      expect(result[:rating]).to eq 1
+    it 'renders vote.json.jbuilder' do
+      patch :vote_up, id: question, format: :json
+      expect(response).to render_template :vote
     end
 
     it 'not changed vote for own question' do
-      patch :vote_up, id: user_question
+      patch :vote_up, id: user_question, format: :json
       user_question.reload
       expect(user_question.votes.rating).to eq 0
       expect(user_question.votes.upvotes).to eq 0
@@ -193,23 +189,19 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     it 'decrease vote for smb question' do
-      patch :vote_down, id: question
+      patch :vote_down, id: question, format: :json
       question.reload
       expect(question.votes.rating).to eq -1
       expect(question.votes.downvotes).to eq -1
     end
 
-    it 'response JSON' do
-      patch :vote_down, id: question
-      result = JSON.parse(response.body, symbolize_names: true)
-      expect(response.status).to eq 200
-      expect(result[:upvotes]).to eq 0
-      expect(result[:downvotes]).to eq -1
-      expect(result[:rating]).to eq -1
+    it 'renders vote.json.jbuilder' do
+      patch :vote_down, id: question, format: :json
+      expect(response).to render_template :vote
     end
 
     it 'not changed vote for own question' do
-      patch :vote_down, id: user_question
+      patch :vote_down, id: user_question, format: :json
       user_question.reload
       expect(user_question.votes.rating).to eq 0
       expect(user_question.votes.upvotes).to eq 0
@@ -222,24 +214,19 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     it 'reset vote for smb question' do
-      patch :vote_up, id: question
+      patch :vote_up, id: question, format: :json
       question.reload
-      patch :vote_reset, id: question
+      patch :vote_reset, id: question, format: :json
       question.reload
       expect(question.votes.rating).to eq 0
       expect(question.votes.upvotes).to eq 0
     end
 
-    it 'response JSON' do
-      patch :vote_up, id: question
+    it 'renders vote.json.jbuilder' do
+      patch :vote_up, id: question, format: :json
       question.reload
-      patch :vote_reset, id: question
-      question.reload
-      result = JSON.parse(response.body, symbolize_names: true)
-      expect(response.status).to eq 200
-      expect(result[:upvotes]).to eq 0
-      expect(result[:downvotes]).to eq 0
-      expect(result[:rating]).to eq 0
+      patch :vote_reset, id: question, format: :json
+      expect(response).to render_template :vote
     end
   end
 end

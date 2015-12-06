@@ -2,14 +2,14 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-ready = ->
+$ ->
   $('.answers').on 'click', '.edit-answer-link', (e) -> 
     e.preventDefault();
     $(this).hide();
     answer_id = $(this).data('answerId')
     $('form#edit-answer-' + answer_id).show()
 
-$(document).ready(ready)
-$(document).on('page:load', ready)
-$(document).on('page:update', ready)
+  $('.answer-votes').bind 'ajax:success', (e, data, status, xhr) ->
+    answer = $.parseJSON(xhr.responseText)
+    $(".answer-votes#answer_#{answer.id}").html(JST["templates/answer-vote"]({object: answer}))
 

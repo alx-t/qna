@@ -1,0 +1,20 @@
+.row
+  .col-md-2.answer-votes-up 
+    | Upvotes: #{object.votes.upvotes}
+  .col-md-2.answer-votes-down 
+    | Downvotes: #{object.votes.downvotes}
+  .col-md-2.answer-votes-rating 
+    | Rating: #{object.votes.rating}
+  br
+.row.answer-votes-links
+  - if user_signed_in? && !(current_user.id == object.user_id)
+    - if object.voted_for? current_user
+      .col-md-2
+        = link_to 'Reset', vote_reset_question_answer_path(id: object, question_id: object.question_id), method: :patch, remote: true
+    - else
+      .col-md-2
+        = link_to 'Up', vote_up_question_answer_path(id: object, question_id: object.question_id), method: :patch, remote: true
+      .col-md-2
+        = link_to 'Down', vote_down_question_answer_path(id: object, question_id: object.question_id), method: :patch, remote: true
+hr
+

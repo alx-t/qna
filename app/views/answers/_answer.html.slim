@@ -9,6 +9,9 @@
         ul
           - answer.attachments.each do |a|
             li = link_to a.file.identifier, a.file.url
+      hr
+      .answer-votes id="#{dom_id(answer)}"
+          = render 'answers/votes', object: answer
       .row
         - if user_author_of?(answer) 
           = simple_form_for [@question, answer],

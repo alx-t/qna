@@ -1,0 +1,19 @@
+.row
+  .col-md-2.answer-votes-up 
+    | Upvotes: #{@object.upvotes}
+  .col-md-2.answer-votes-down 
+    | Downvotes: #{@object.downvotes}
+  .col-md-2.answer-votes-rating 
+    | Rating: #{@object.rating}
+  br
+.row.answer-votes-links
+  - if @object.voted
+    .col-md-2
+      a href=@object.vote_reset_url data-method="patch" data-remote="true" Reset
+  - else
+    .col-md-2
+      a href=@object.vote_up_url data-method="patch" data-remote="true" Up
+    .col-md-2
+      a href=@object.vote_down_url data-method="patch" data-remote="true" Down
+hr
+
