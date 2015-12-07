@@ -9,16 +9,12 @@ class Vote < ActiveRecord::Base
   scope :downvotes, -> { where(value: -1) }
 
   def update_vote(value)
-    case value
-      when :up
-        self.value = 1
-        save
-      when :down
-        self.value = -1
-        save
-      when :reset
-        self.destroy
-    end
+    self.value = value
+    save
+  end
+
+  def reset_vote
+    self.destroy
   end
 
   def self.rating

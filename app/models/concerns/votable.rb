@@ -6,15 +6,15 @@ module Votable
   end
 
   def vote_up(user)
-    set_vote(user, :up)
+    set_vote(user, 1)
   end
 
   def vote_down(user)
-    set_vote(user, :down)
+    set_vote(user, -1)
   end
 
   def vote_reset(user)
-    set_vote(user, :reset)
+    delete_vote(user)
   end
 
   def voted_for?(user)
@@ -26,6 +26,11 @@ module Votable
   def set_vote(user, value)
     vote = votes.find_or_create_by(user: user)
     vote.update_vote(value)
+  end
+
+  def delete_vote(user)
+    vote = votes.find_by(user: user)
+    vote.reset_vote unless vote.nil?
   end
 end
 
