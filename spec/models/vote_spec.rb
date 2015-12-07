@@ -21,27 +21,27 @@ RSpec.describe Vote, type: :model do
 
     it 'vote up' do
       question.vote_up(user)
-      expect(question.votes.upvotes).to eq 1
+      expect(question.votes.upvotes.rating).to eq 1
       expect(question.votes.rating).to eq 1
     end
 
     it 'vote down' do
       question.vote_down(user)
-      expect(question.votes.downvotes).to eq -1
+      expect(question.votes.downvotes.rating).to eq -1
       expect(question.votes.rating).to eq -1
     end
 
     it 'vote reset' do
       question.vote_up(user)
       question.vote_reset(user)
-      expect(question.votes.upvotes).to eq 0
+      expect(question.votes.upvotes.rating).to eq 0
       expect(question.votes.rating).to eq 0
     end
 
     it 'same user same question double vote up' do
       question.vote_up(user)
       question.vote_up(user)
-      expect(question.votes.upvotes).to eq 1
+      expect(question.votes.upvotes.rating).to eq 1
       expect(question.votes.rating).to eq 1
     end
   end
@@ -52,27 +52,27 @@ RSpec.describe Vote, type: :model do
 
     it 'vote up' do
       answer.vote_up(user)
-      expect(answer.votes.upvotes).to eq 1
+      expect(answer.votes.upvotes.rating).to eq 1
       expect(answer.votes.rating).to eq 1
     end
 
     it 'vote down' do
       answer.vote_down(user)
-      expect(answer.votes.downvotes).to eq -1
+      expect(answer.votes.downvotes.rating).to eq -1
       expect(answer.votes.rating).to eq -1
     end
 
     it 'vote reset' do
       answer.vote_up(user)
       answer.vote_reset(user)
-      expect(answer.votes.upvotes).to eq 0
+      expect(answer.votes.upvotes.rating).to eq 0
       expect(answer.votes.rating).to eq 0
     end
 
     it 'same user same answer double vote up' do
       answer.vote_up(user)
       answer.vote_up(user)
-      expect(answer.votes.upvotes).to eq 1
+      expect(answer.votes.upvotes.rating).to eq 1
       expect(answer.votes.rating).to eq 1
     end
   end

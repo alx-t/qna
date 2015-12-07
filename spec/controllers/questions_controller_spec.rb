@@ -167,7 +167,7 @@ RSpec.describe QuestionsController, type: :controller do
       patch :vote_up, id: question, format: :json
       question.reload
       expect(question.votes.rating).to eq 1
-      expect(question.votes.upvotes).to eq 1
+      expect(question.votes.upvotes.rating).to eq 1
     end
 
     it 'renders vote.json.jbuilder' do
@@ -179,7 +179,7 @@ RSpec.describe QuestionsController, type: :controller do
       patch :vote_up, id: user_question, format: :json
       user_question.reload
       expect(user_question.votes.rating).to eq 0
-      expect(user_question.votes.upvotes).to eq 0
+      expect(user_question.votes.upvotes.rating).to eq 0
     end
   end
 
@@ -192,7 +192,7 @@ RSpec.describe QuestionsController, type: :controller do
       patch :vote_down, id: question, format: :json
       question.reload
       expect(question.votes.rating).to eq -1
-      expect(question.votes.downvotes).to eq -1
+      expect(question.votes.downvotes.rating).to eq -1
     end
 
     it 'renders vote.json.jbuilder' do
@@ -204,7 +204,7 @@ RSpec.describe QuestionsController, type: :controller do
       patch :vote_down, id: user_question, format: :json
       user_question.reload
       expect(user_question.votes.rating).to eq 0
-      expect(user_question.votes.upvotes).to eq 0
+      expect(user_question.votes.upvotes.rating).to eq 0
     end
   end
 
@@ -219,7 +219,7 @@ RSpec.describe QuestionsController, type: :controller do
       patch :vote_reset, id: question, format: :json
       question.reload
       expect(question.votes.rating).to eq 0
-      expect(question.votes.upvotes).to eq 0
+      expect(question.votes.upvotes.rating).to eq 0
     end
 
     it 'renders vote.json.jbuilder' do

@@ -5,17 +5,24 @@ class Vote < ActiveRecord::Base
   validates :value, presence: true
   validates :user_id, presence: true, uniqueness: { case_sensitive: true, scope: [:votable_type, :votable_id] }
 
-  scope :upvotes, -> { where(value: 1).count }
-  scope :downvotes, -> { where(value: -1).sum(:value) }
-  scope :rating, -> { sum(:value) }
+  scope :upvotes, -> { where(value: 1) }
+  scope :downvotes, -> { where(value: -1) }
 
   def update_vote(value)
-    self.value = case value
-                 when :up     then 1
-                 when :down   then -1
-                 when :reset  then 0
+    case value
+      when :up
+        self.value = 1
+        save
+      when :down
+        self.value = -1
+        save
+      when :reset
+        self.destroy
     end
-    save
+  end
+
+  def self.rating
+    sum(:value)
   end
 end
 
