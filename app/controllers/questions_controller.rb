@@ -31,6 +31,7 @@ class QuestionsController < ApplicationController
 
     if @question.save
       flash[:success] = "Your question successfully created."
+      PrivatePub.publish_to "/questions", question: render_to_string('questions/show.json.jbuilder')
       redirect_to @question
     else
       render :new

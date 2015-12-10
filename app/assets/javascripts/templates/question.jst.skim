@@ -1,0 +1,13 @@
+.row.question id="question_#{@question.id}"
+  .col-md-1
+    = @question.votes_count
+    br
+    | votes
+  .col-md-1
+    = @question.answers_count
+    br
+    | answers
+  .col-md-6
+    a href=@question.view_url = @question.title
+hr
+

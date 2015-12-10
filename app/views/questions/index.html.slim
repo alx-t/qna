@@ -1,19 +1,24 @@
 h3 Questions 
+hr
 
-table.table.table-striped
-  thead
-    tr
-      th Title
-      th
+.question-list
+  - @questions.each do |question|  
+    .row.question id="#{dom_id(question)}"
+      .col-md-1
+        = question.votes.count
+        br
+        | votes
+      .col-md-1
+        = question.answers.count
+        br
+        | answers
+      .col-md-6
+        = link_to question.title, question
+    hr
 
-  tbody
-    - @questions.each do |question|
-      tr
-        td = question.title
-        td
-          = link_to 'View', question
-          br
+.row
+  - if user_signed_in?
+    = link_to 'Ask question', new_question_path
 
-- if user_signed_in?
-  = link_to 'Ask question', new_question_path
+= subscribe_to "/questions"
 

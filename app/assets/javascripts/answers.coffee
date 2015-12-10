@@ -18,7 +18,6 @@ $ ->
 
   PrivatePub.subscribe '/questions/' + questionId + '/answers', (data, channel) ->
     answer = $.parseJSON(data['answer'])
-    console.log(answer)
     $('.answers').append(JST['templates/answer']({answer: answer, current_user_id: currentUserId}))
     $('#answer_body').val('')
     
