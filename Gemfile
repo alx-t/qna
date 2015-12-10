@@ -24,6 +24,8 @@ gem 'cocoon'
 gem 'carrierwave'
 gem 'remotipart'
 
+gem 'private_pub'
+
 gem 'devise'
 
 group :development, :test do

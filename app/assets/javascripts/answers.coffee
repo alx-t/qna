@@ -13,3 +13,12 @@ $ ->
     answer = $.parseJSON(xhr.responseText)
     $(".answer-votes#answer_#{answer.id}").html(JST["templates/answer-vote"]({object: answer}))
 
+  questionId = $('.answers').data('questionId')
+  currentUserId = $('.main').data('currentUserId')
+
+  PrivatePub.subscribe '/questions/' + questionId + '/answers', (data, channel) ->
+    answer = $.parseJSON(data['answer'])
+    console.log(answer)
+    $('.answers').append(JST['templates/answer']({answer: answer, current_user_id: currentUserId}))
+    $('#answer_body').val('')
+    

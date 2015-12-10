@@ -5,6 +5,8 @@ class AnswersController < ApplicationController
 
   include Voted
 
+  #respond_to :js, :json
+
   def edit
     unless @answer.user == current_user
       flash[:danger] = "You can not edit this answer"
@@ -14,11 +16,9 @@ class AnswersController < ApplicationController
 
   def create
     @answer = current_user.answers.build(answer_params.merge(question: @question))
-
     if @answer.save
-      flash.now[:success] = "Your answer successfully created"
+      PrivatePub.publish_to "/questions/#{@question.id}/answers", answer: render_to_string('answers/show')
     else
-      flash.now[:danger] = "Errors: #{@answer.errors.full_messages}"
     end
   end
 

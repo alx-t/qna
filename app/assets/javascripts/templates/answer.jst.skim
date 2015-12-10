@@ -1,0 +1,54 @@
+.row.answer
+  div id="answer-id-#{@answer.id}"
+    - if @answer.is_best
+      h4 The best answer 
+    p = @answer.body
+    - if @answer.attachments.length >= 1
+      p Attachments:
+      ul
+        - for attachment in @answer.attachments
+          li 
+            a href=attachment.file_url
+              = attachment.file_name
+    hr
+    .answer-votes id="answer_#{@answer.id}"
+      .row
+        .col-md-2.answer-votes-up 
+          | Upvotes: #{@answer.upvotes}
+        .col-md-2.answer-votes-down 
+          | Downvotes: #{@answer.downvotes}
+        .col-md-2.answer-votes-rating 
+          | Rating: #{@answer.rating}
+        br
+      - if @current_user_id && !(@current_user_id == @answer.user_id)
+        .row.answer-votes-links
+          - if @answer.voted
+            .col-md-2
+              a href=@answer.vote_reset_url data-method="patch" data-remote="true" Reset
+          - else
+            .col-md-2
+              a href=@answer.vote_up_url data-method="patch" data-remote="true" Up
+            .col-md-2
+              a href=@answer.vote_down_url data-method="patch" data-remote="true" Down
+        hr
+
+    .row
+      /! - if @current_user_id == @answer.user_id
+      form.simple_form.answer-edit id="edit-answer-#{@answer.id}" method="post" action="/questions/#{@answer.question_id}/answers/#{@answer.id}" data-remote="true"
+        input name="utf8" type="hidden" value="&#x2713;"
+        input name="_method" type="hidden" value="patch"
+        textarea.text.required.form-control#answer_body name="answer[body]" = @answer.body
+        input.btn name="commit" type="submit" value="Save"
+        p Attachments:
+        p
+          .form-group
+            a.add_nested_fields data-association="attachments" data-blueprint-id="attachments_fields_blueprint" href="javascript:void(0)"  Add
+
+      .col-md-1
+        a href='' class="edit-answer-link" data-answer-id=@answer.id Edit
+      .col-md-1
+        a href=@answer.destroy_url data-remote="true" data-method="delete" Delete
+    - if @current_user_id == @answer.question_user_id && !@answer.is_best
+      .col-md-1
+        a href=@answer.set_best_url data-method="patch" data-remote="true" id="set-best-link-#{@answer.id}"
+

@@ -21,13 +21,17 @@
 hr
 .question-votes
   = render 'votes', object: @question 
+/ul.question-comments
+/ = render @question.comments
 
 .container-fluid
   - if @question.answers.any?
     h4 #{@question.answers.count} Answers
-    .answers
+    .answers data={question_id: "#{@question.id}"}
       = render @question.answers
 
   - if user_signed_in?
     = render 'answers/form', question: @question, answer: @answer
+
+= subscribe_to "/questions/#{@question.id}/answers"
 

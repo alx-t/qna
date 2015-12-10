@@ -2,6 +2,9 @@
   $('.answers').append('<%= j render 'answer', answer: @answer %>');
   $('form#new_answer div textarea').val('');
   $(".nested-fields :not(:first)").remove();
+  <% publish_to "/questions/#{@question.id}/answers" do %>
+    $('.answers').append('<%= j render 'answer', answer: @answer %>');
+  <% end %>
 <% end %>
 
 $('.notice').html('<%= j render partial: 'shared/notice'  %>');
