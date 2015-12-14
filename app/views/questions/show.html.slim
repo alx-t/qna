@@ -21,8 +21,11 @@
 hr
 .question-votes
   = render 'votes', object: @question 
-/ul.question-comments
-/ = render @question.comments
+
+ul.question-comments
+  = render @question.comments
+- if user_signed_in?
+  = render 'comments/form', comment: @question.comments.new, commentable: @question
 
 .container-fluid
   - if @question.answers.any?
