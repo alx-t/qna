@@ -1,21 +1,22 @@
 require_relative '../acceptance_helper'
 
-feature 'Commenting question stories', %q{
-  In order to comment questions
+feature 'Commenting answer stories', %q{
+  In order to comment answers
   As an authenticated user
-  I want to be able comments questions
+  I want to be able comments answers
 } do
 
   given!(:user) { create :user }
   given!(:question) { create :question }
+  given!(:question_answer) { create :answer, question: question }
 
   background do
     sign_in user
     visit question_path question
   end
 
-  scenario 'User comments question', js: true do
-    within '.question-comments' do
+  scenario 'User comments answer', js: true do
+    within '.answer-comments' do
       fill_in 'Comment', with: 'Test comment'
       click_on 'Add comment'
 
@@ -24,8 +25,8 @@ feature 'Commenting question stories', %q{
     end
   end
 
-  scenario 'Non-authenticated user tries to comment question' do
-    within '.question-comments' do
+  scenario 'Non-authenticated user tries to comment answer' do
+    within '.answer-comments' do
       expect(page).to_not have_content 'Add comment'
     end
   end

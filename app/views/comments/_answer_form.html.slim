@@ -1,0 +1,4 @@
+= simple_form_for [question, commentable, comment], remote: true do |f|
+  = f.input :body, label: 'Comment'
+  .btn = f.submit 'Add comment'
+

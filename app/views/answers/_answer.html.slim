@@ -1,5 +1,5 @@
 - if answer.id.present?
-  .row.answer
+  .row.answer data={answer_id: "#{answer.id}"}
     div id="answer-id-#{answer.id}"
       - if answer.is_best?
         h4 The best answer 
@@ -42,4 +42,9 @@
                 remote: true,
                 id: "set-best-link-#{answer.id}"
       hr
+      .answer-comments
+        .ul.answer-comments-list
+          = render answer.comments
+        - if user_signed_in?
+          .answer-new-comment = render 'comments/answer_form', question: @question, comment: answer.comments.new, commentable: answer
 

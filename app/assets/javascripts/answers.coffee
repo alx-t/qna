@@ -12,6 +12,7 @@ $ ->
   $('.answer-votes').bind 'ajax:success', (e, data, status, xhr) ->
     answer = $.parseJSON(xhr.responseText)
     $(".answer-votes#answer_#{answer.id}").html(JST["templates/answer-vote"]({object: answer}))
+    $('#answer_body').val('')
 
   questionId = $('.answers').data('questionId')
   currentUserId = $('.main').data('currentUserId')

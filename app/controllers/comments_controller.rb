@@ -5,9 +5,6 @@ class CommentsController < ApplicationController
   def create
     @comment = @commentable.comments.build(comment_params.merge(user: current_user))
     if @comment.save
-      p @comment
-      p comment: render_to_string('comments/show')
-      p comment_path
       PrivatePub.publish_to comment_path, comment: render_to_string('comments/show')
       render nothing: true
     else
@@ -42,7 +39,7 @@ class CommentsController < ApplicationController
       when 'question'
         "/questions/#{@commentable.id}/comments"
       when 'answer'
-        "/questions/#{@commentable.question.id}/answers/#{@commentable.id}/comments"
+        "/questions/#{@commentable.question.id}/comments"
     end
   end
 end

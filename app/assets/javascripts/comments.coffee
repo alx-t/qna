@@ -3,10 +3,20 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/#
 
 $ ->
-  questionId = $('.answers').data('questionId')
+  $('form#new_comment').bind 'ajax:error', (e, xhr, status, error) ->
+    errors = $.parseJSON(xhr.responseText)
+    for value in errors
+      $(this).before '<p class="error">' + value + '</p>'
 
+  questionId = $('.answers').data('questionId')
+  
   PrivatePub.subscribe '/questions/' + questionId + '/comments', (data, channel) ->
+    $('p').remove('.error')
     comment = $.parseJSON(data['comment'])
-    console.log comment
-    $('.question-comments').append(JST['templates/question-comment']({comment: comment}))
+    if comment.commentable_type == 'Question'
+      $('.question-comments-list').append(JST['templates/question-comment']({comment: comment}))
+      $('#comment_body').val('')
+    if comment.commentable_type == 'Answer'
+      $('.answer-comments-list').append(JST['templates/question-comment']({comment: comment}))
+      $('.answer-new-comment #comment_body').val('')
 

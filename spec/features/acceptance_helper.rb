@@ -8,6 +8,10 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
 
   Capybara.javascript_driver = :poltergeist
+  options = {js_errors: false}
+  Capybara.register_driver :poltergeist do |app|
+    Capybara::Poltergeist::Driver.new(app, options)
+  end
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)

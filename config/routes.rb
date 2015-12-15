@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   resources :questions, concerns: :votable do
     resources :comments, defaults: { commentable: 'questions' }
     resources :answers, concerns: :votable do
-      resources :comments, defaults: { commentable: 'answwers' }
+      resources :comments, defaults: { commentable: 'answers' }
       patch 'set_best', on: :member
     end
   end
