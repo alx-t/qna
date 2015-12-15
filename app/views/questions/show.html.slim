@@ -37,4 +37,5 @@ ul.question-comments
     = render 'answers/form', question: @question, answer: @answer
 
 = subscribe_to "/questions/#{@question.id}/answers"
+= subscribe_to "/questions/#{@question.id}/comments"
 

@@ -4,13 +4,9 @@
 
 $ ->
   questionId = $('.answers').data('questionId')
-  console.log questionId
-  str = '/questions/' + questionId + '/comments'
-  console.log str
 
   PrivatePub.subscribe '/questions/' + questionId + '/comments', (data, channel) ->
-    console.log data
     comment = $.parseJSON(data['comment'])
     console.log comment
-    $('.question-list').append(JST['templates/question-comment']({comment: comment}))
+    $('.question-comments').append(JST['templates/question-comment']({comment: comment}))
 
