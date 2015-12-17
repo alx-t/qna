@@ -44,7 +44,7 @@ feature 'Add files to question', %q{
       click_on 'Remove file'
       click_on 'Create'
 
-      expect(page).to have_content 'Your question successfully changed'
+      expect(page).to have_content 'Question was successfully updated'
       expect(page).to_not have_link 'test1.txt'
     end
 

@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative 'acceptance_helper'
 
 feature 'Question stories', %q{
   In order to working with questions
@@ -11,13 +11,14 @@ feature 'Question stories', %q{
   given!(:smb_question) { create(:question) }
 
   scenario 'Authenticated user creates question' do
-    sign_in(user)
+    sign_in user
+
     visit questions_path
     click_on 'Ask question'
     fill_in 'Title', with: 'Test question'
     fill_in 'Body', with: 'Test question body'
     click_on 'Create'
-    expect(page).to have_content 'Your question successfully created.'
+    expect(page).to have_content 'Question was successfully created.'
     expect(page).to have_content 'Test question body'
     expect(page.status_code).to eq 200
   end
@@ -34,7 +35,7 @@ feature 'Question stories', %q{
     sign_in(user)
     visit question_path user_question
     click_on 'Delete'
-    expect(page).to have_content 'Your question successfully deleted'
+    expect(page).to have_content 'Array was successfully destroyed'
   end
 
   scenario 'Authenticates user tries to delete smb question' do
@@ -56,12 +57,12 @@ feature 'Question stories', %q{
     fill_in 'Body', with: 'New body'
     click_on 'Create'
     expect(page).to have_content 'New title'
-    expect(page).to have_content 'Your question successfully changed'
+    expect(page).to have_content 'Question was successfully updated'
     expect(page.status_code).to eq 200
   end
 
   scenario 'Authenticates user tries to edit smb question' do
-    sign_in(user)
+    sign_in user
     visit question_path smb_question
     expect(page).to_not have_content 'Edit'
 

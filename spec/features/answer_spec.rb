@@ -40,7 +40,7 @@ feature 'Answer stories', %q{
     sign_in(user)
     visit question_path question
     find('.answers').click_on 'Delete'
-    expect(page).to have_content 'Your answer successfully deleted'
+    expect(page).to have_content 'Answer was successfully destroyed'
   end
 
   scenario 'Authenticated user tries to delete smb answer' do

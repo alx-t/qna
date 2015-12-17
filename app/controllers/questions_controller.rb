@@ -1,22 +1,23 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index]
   before_action :load_question, only: [:edit, :update, :destroy]
+  before_action :build_answer, only: :show
+  after_action :publish_question, only: :create
 
   include Voted
 
+  respond_to :js, :json
+
   def index
-    @questions = Question.all
+    respond_with(@questions = Question.all)
   end
 
   def show
-    @question = Question.find(params[:id])
-    @answer = @question.answers.build
-    @answer.attachments.build
+    respond_with @question
   end
 
   def new
-    @question = current_user.questions.new
-    @question.attachments.build
+    respond_with(@question = current_user.questions.new)
   end
 
   def edit
@@ -27,41 +28,31 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = current_user.questions.new(question_params)
-
-    if @question.save
-      flash[:success] = "Your question successfully created."
-      PrivatePub.publish_to "/questions", question: render_to_string('questions/show.json.jbuilder')
-      redirect_to @question
-    else
-      render :new
-    end
+    respond_with(@question = current_user.questions.create(question_params))
   end
 
   def update
-    if @question.update(question_params)
-      flash[:success] = "Your question successfully changed"
-      redirect_to @question
-    else
-      render :edit
-    end
+    @question.update(question_params)
+    respond_with @question
   end
 
   def destroy
-    if @question.nil?
-      flash[:danger] = "You can not delete this question"
-      redirect_to questions_path
-    else
-      current_user.questions.destroy(@question)
-      flash[:success] = "Your question successfully deleted"
-      redirect_to questions_path
-    end
+    respond_with(current_user.questions.destroy(@question), location: questions_path) unless @question.nil?
   end
 
   private
 
   def load_question
     @question = current_user.questions.find_by(id: params[:id])
+  end
+
+  def build_answer
+    @question = Question.find(params[:id])
+    @answer = @question.answers.build
+  end
+
+  def publish_question
+    PrivatePub.publish_to "/questions", question: QuestionPresenter.new(@question).to_json if @question.errors.empty?
   end
 
   def question_params

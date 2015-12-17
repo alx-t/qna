@@ -2,43 +2,30 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :load_question
   before_action :load_answer, only: [:edit, :update, :destroy, :set_best]
+  after_action :publish_answer, only: :create
 
   include Voted
 
-  #respond_to :js, :json
+  respond_to :js, :json
 
   def edit
     unless @answer.user == current_user
       flash[:danger] = "You can not edit this answer"
-      redirect_to question_path @question
+      respond_with @question
     end
   end
 
   def create
-    @answer = current_user.answers.build(answer_params.merge(question: @question))
-    if @answer.save
-      PrivatePub.publish_to "/questions/#{@question.id}/answers", answer: render_to_string('answers/show')
-      render nothing: true
-    else
-      render json: @answer.errors.full_messages, status: :unprocessable_entity
-    end
+    respond_with(@answer = current_user.answers.create(answer_params.merge(question: @question)))
   end
 
   def update
-    if @answer.update(answer_params)
-      flash.now[:success] = "Your answer successfully changed"
-    else
-      flash.now[:danger] = "Errors: #{@answer.errors.full_messages}"
-    end
+    @answer.update(answer_params)
+    respond_with @answer
   end
 
   def destroy
-    if @answer.user == current_user
-      @answer.destroy
-      flash.now[:success] = "Your answer successfully deleted"
-    else
-      flash.now[:danger] = "You can not delete this answer"
-    end
+    respond_with(@answer.destroy) if @answer.user == current_user
   end
 
   def set_best
@@ -54,6 +41,10 @@ class AnswersController < ApplicationController
 
   def load_answer
     @answer = @question.answers.find_by(id: params[:id])
+  end
+
+  def publish_answer
+      PrivatePub.publish_to "/questions/#{@question.id}/answers", answer: render_to_string('answers/show.json.jbuilder') if @answer.errors.empty?
   end
 
   def answer_params

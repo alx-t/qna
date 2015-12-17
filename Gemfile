@@ -23,6 +23,7 @@ gem 'simple_form'
 gem 'cocoon'
 gem 'carrierwave'
 gem 'remotipart'
+gem 'responders'
 
 gem 'private_pub'
 

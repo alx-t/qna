@@ -3,9 +3,9 @@ class AnswerPresenter < Presenter
     {
       id: o.id,
       question_id: o.question_id,
-      question_user_id: o.question.user_id,
       body: o.body,
       user_id: o.user_id,
+      question_user_id: o.question.user_id,
       is_best: o.is_best,
       upvotes: o.votes.upvotes.rating,
       downvotes: o.votes.downvotes.rating,

@@ -4,7 +4,7 @@
 
   p Attachments:
   p
-    = f.simple_fields_for :attachments do |a|
+    = f.simple_fields_for :attachments, question.attachments.build do |a|
       = render 'shared/attachment_fields', f: a
     .links
       = link_to_add_association 'Add file', f, :attachments, partial: 'shared/attachment_fields'

@@ -1,15 +1,12 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :load_commentable
+  after_action :publish_comment, only: :create
+
+  respond_to :json
 
   def create
-    @comment = @commentable.comments.build(comment_params.merge(user: current_user))
-    if @comment.save
-      PrivatePub.publish_to comment_path, comment: render_to_string('comments/show')
-      render nothing: true
-    else
-      render json: @comment.errors.full_messages, status: :unprocessable_entity
-    end
+    respond_with(@comment = @commentable.comments.create(comment_params.merge(user: current_user)))
   end
 
   private
@@ -41,6 +38,10 @@ class CommentsController < ApplicationController
       when 'answer'
         "/questions/#{@commentable.question.id}/comments"
     end
+  end
+
+  def publish_comment
+    PrivatePub.publish_to comment_path, comment: CommentPresenter.new(@comment).to_json if @comment.errors.empty?
   end
 end
 

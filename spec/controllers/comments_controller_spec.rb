@@ -15,11 +15,6 @@ RSpec.describe CommentsController, type: :controller do
             .to change(Comment, :count).by(1)
           should respond_with(200)
         end
-
-        it 'renders show template' do
-          post :create, question_id: question.id, commentable: 'questions', comment: attributes_for(:question_comment), format: :json
-          expect(response).to render_template 'comments/show'
-        end
       end
 
       context 'with invalid attributes' do
@@ -49,11 +44,6 @@ RSpec.describe CommentsController, type: :controller do
           expect { post :create, question_id: question.id, answer_id: answer.id, commentable: 'answers', comment: attributes_for(:answer_comment), format: :json }
             .to change(Comment, :count).by(1)
           should respond_with(200)
-        end
-
-        it 'renders show template' do
-          post :create, question_id: question.id, answer_id: answer.id, commentable: 'answers', comment: attributes_for(:answer_comment), format: :json
-          expect(response).to render_template 'comments/show'
         end
       end
 
