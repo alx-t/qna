@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
   respond_to :json
 
   def create
-    respond_with(@comment = @commentable.comments.create(comment_params.merge(user: current_user)))
+    respond_with(@comment = @commentable.comments.create(comment_params.merge(user: current_user)), location: comment_location)
   end
 
   private
@@ -36,7 +36,16 @@ class CommentsController < ApplicationController
       when 'question'
         "/questions/#{@commentable.id}/comments"
       when 'answer'
-        "/questions/#{@commentable.question.id}/comments"
+        "/questions/#{@commentable.question_id}/comments"
+    end
+  end
+
+  def comment_location
+    case commentable_name
+      when 'question'
+        question_path(@commentable.id)
+      when 'answer'
+        question_path(@commentable.question_id)
     end
   end
 

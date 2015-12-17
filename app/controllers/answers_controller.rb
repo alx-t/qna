@@ -16,7 +16,7 @@ class AnswersController < ApplicationController
   end
 
   def create
-    respond_with(@answer = current_user.answers.create(answer_params.merge(question: @question)))
+    respond_with(@answer = current_user.answers.create(answer_params.merge(question: @question)), location: question_path(@question))
   end
 
   def update

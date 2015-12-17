@@ -13,7 +13,7 @@ RSpec.describe CommentsController, type: :controller do
         it 'create question comment' do
           expect { post :create, question_id: question.id, commentable: 'questions', comment: attributes_for(:question_comment), format: :json }
             .to change(Comment, :count).by(1)
-          should respond_with(200)
+          should respond_with(201)
         end
       end
 
@@ -43,7 +43,7 @@ RSpec.describe CommentsController, type: :controller do
         it 'create answer comment' do
           expect { post :create, question_id: question.id, answer_id: answer.id, commentable: 'answers', comment: attributes_for(:answer_comment), format: :json }
             .to change(Comment, :count).by(1)
-          should respond_with(200)
+          should respond_with(201)
         end
       end
 
