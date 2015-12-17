@@ -55,7 +55,7 @@ feature 'Add files to answer', %q{
         click_on 'Save'
       end
 
-      expect(page).to have_content 'Your answer successfully changed'
+      expect(page).to have_content 'Answer was successfully updated'
       expect(page).to_not have_link 'test1.txt'
     end
 
@@ -66,7 +66,7 @@ feature 'Add files to answer', %q{
       all('input[type="file"]')[1].set "#{Rails.root}/spec/fixtures/test2.txt"
       click_on 'Save'
 
-      expect(page).to have_content 'Your answer successfully changed'
+      expect(page).to have_content 'Answer was successfully updated'
       expect(page).to have_link 'test2.txt'
     end
   end
