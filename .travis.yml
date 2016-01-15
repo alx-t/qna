@@ -6,7 +6,7 @@ env:
 before_script:
   - cp config/database.travis.yml config/database.yml
   - psql -c 'create database travis_ci_test;' -U postgres
-  - bundle exec puma start -R private_pub.ru -p 9292
+  - bundle exec rackup private_pub.ru -s puma -E production 
 script:
   - bundle exec rake db:migrate RAILS_ENV=test --trace
   - bundle exec rake db:test:prepare

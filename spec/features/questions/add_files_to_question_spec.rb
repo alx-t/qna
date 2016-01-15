@@ -15,7 +15,7 @@ feature 'Add files to question', %q{
       visit new_question_path
     end
 
-    scenario 'User add file when ask question' do
+    scenario 'User add file when ask question', js: true do
       add_attachment
       click_on 'Create'
 
@@ -25,8 +25,7 @@ feature 'Add files to question', %q{
     scenario 'add some files to question', js: true do
       add_attachment
 
-      click_on 'Add file'
-      all('input[type="file"]')[1].set "#{Rails.root}/spec/fixtures/test2.txt"
+      add_new_attachment
       click_on 'Create'
 
       expect(page).to have_link 'test1.txt'
@@ -49,7 +48,7 @@ feature 'Add files to question', %q{
     end
 
     scenario 'add files on edit question', js: true do
-      add_attachment
+      add_new_attachment
       click_on 'Create'
 
       expect(page).to have_link 'test1.txt', href: "/uploads/attachment/file/1/test1.txt"
@@ -59,7 +58,13 @@ feature 'Add files to question', %q{
   def add_attachment
     fill_in 'Title', with: 'Test question'
     fill_in 'Body', with: 'Test question body'
+    click_on 'Add file'
     attach_file 'File', "#{Rails.root}/spec/fixtures/test1.txt"
+  end
+
+  def add_new_attachment
+    click_on 'Add file'
+    all('input[type="file"]').last.set "#{Rails.root}/spec/fixtures/test2.txt"
   end
 end
 

@@ -8,13 +8,6 @@ class AnswersController < ApplicationController
 
   respond_to :js, :json
 
-  def edit
-    unless @answer.user == current_user
-      flash[:danger] = "You can not edit this answer"
-      respond_with @question
-    end
-  end
-
   def create
     respond_with(@answer = current_user.answers.create(answer_params.merge(question: @question)), location: question_path(@question))
   end
@@ -25,7 +18,7 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    respond_with(@answer.destroy) if @answer.user == current_user
+    respond_with(@answer.destroy) #if @answer.user == current_user
   end
 
   def set_best

@@ -37,7 +37,7 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    respond_with(current_user.questions.destroy(@question), location: questions_path) unless @question.nil?
+    respond_with(current_user.questions.destroy(@question), location: questions_path) #unless @question.nil?
   end
 
   private
