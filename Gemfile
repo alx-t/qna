@@ -28,6 +28,9 @@ gem 'responders'
 gem 'private_pub'
 
 gem 'devise'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter', '~> 1.2.1'
 
 group :development, :test do
   gem 'pry-byebug'
