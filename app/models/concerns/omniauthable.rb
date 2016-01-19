@@ -3,12 +3,19 @@ module Omniauthable
 
   included do
     has_many :authorizations, dependent: :destroy
+  end
 
-    def self.find_for_oauth(auth)
+  class_methods do
+    def find_for_oauth(auth)
       authorization = Authorization.where(provider: auth.provider, uid: auth.uid.to_s).first
       return authorization.user if authorization
 
-      email = auth.info[:email]
+      if auth.info.try(:email)
+        email = auth.info[:email]
+      else
+        return false
+      end
+
       user = User.where(email: email).first
       if user
         user.create_authorization(auth)
@@ -19,9 +26,10 @@ module Omniauthable
       end
       user
     end
+  end
 
-    def create_authorization(auth)
+  def create_authorization(auth)
       self.authorizations.create(provider: auth.provider, uid: auth.uid)
-    end
   end
 end
+
