@@ -45,6 +45,6 @@
       .answer-comments
         .ul.answer-comments-list
           = render answer.comments
-        - if user_signed_in?
+        - if can? :create, Comment
           .answer-new-comment = render 'comments/answer_form', question: @question, comment: answer.comments.new, commentable: answer
 

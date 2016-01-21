@@ -8,6 +8,8 @@ class AnswersController < ApplicationController
 
   respond_to :js, :json
 
+  authorize_resource
+
   def create
     respond_with(@answer = current_user.answers.create(answer_params.merge(question: @question)), location: question_path(@question))
   end

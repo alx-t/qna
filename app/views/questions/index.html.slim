@@ -17,7 +17,8 @@ hr
     hr
 
 .row
-  - if user_signed_in?
+  /- if user_signed_in?
+  - if can? :create, Question
     = link_to 'Ask question', new_question_path
 
 = subscribe_to "/questions"

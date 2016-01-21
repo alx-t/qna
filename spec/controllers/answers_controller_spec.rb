@@ -61,14 +61,6 @@ RSpec.describe AnswersController, type: :controller do
         user_answer.reload
         expect(user_answer.body).to eq 'new body'
       end
-
-      it 'render update template' do
-        patch :update, id: user_answer,
-                       question_id: question,
-                       format: :js,
-                       answer: { body: 'new body' }
-        expect(response).to render_template :update
-      end
     end
 
     context 'with invalid attributes' do
@@ -84,10 +76,6 @@ RSpec.describe AnswersController, type: :controller do
       it 'does not change answer attributes' do
         answer.reload
         expect(answer.body).to eq @old_answer.body
-      end
-
-      it 'render template update' do
-        expect(response).to render_template :update
       end
     end
   end

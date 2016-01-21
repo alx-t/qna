@@ -11,7 +11,8 @@
         li = link_to a.file.identifier, a.file.url
   br
 .row
-  - if user_author_of? @question
+  /- if user_author_of? @question
+  - if can? :manage, @question
     .col-md-1
       =<> link_to 'Edit', edit_question_path(@question)
     .col-md-1
@@ -25,7 +26,8 @@ hr
 .question-comments
   ul.question-comments-list
     = render @question.comments
-  - if user_signed_in?
+  /- if user_signed_in?
+  - if can? :create, Comment
     = render 'comments/form', comment: @question.comments.new, commentable: @question
 
 .container-fluid
@@ -34,7 +36,8 @@ hr
     .answers data={question_id: "#{@question.id}"}
       = render @question.answers
 
-  - if user_signed_in?
+  /- if user_signed_in?
+  - if can? :create, Answer
     = render 'answers/form', question: @question, answer: @answer
 
 = subscribe_to "/questions/#{@question.id}/answers"
