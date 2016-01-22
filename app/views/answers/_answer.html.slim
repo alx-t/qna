@@ -13,7 +13,7 @@
       .answer-votes id="#{dom_id(answer)}"
           = render 'answers/votes', object: answer
       .row
-        - if user_author_of?(answer) 
+        - if can? :manage, answer
           = simple_form_for [@question, answer],
             remote: true,
             html: { class: 'answer-edit', id: "edit-answer-#{answer.id}" } do |f|
@@ -34,7 +34,7 @@
                 [answer.question, answer], 
                 remote: true,
                 method: :delete
-        - if user_signed_in? && current_user.id == answer.question.user_id && !answer.is_best?
+        - if can?(:set_best, answer) && !answer.is_best?
           .col-md-1
             = link_to 'Best answer', 
               set_best_question_answer_path(question_id: answer.question, id: answer),

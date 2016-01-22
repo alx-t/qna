@@ -7,7 +7,6 @@
     | Rating: #{object.votes.rating}
   br
 .row.answer-votes-links
-  /- if user_signed_in? && !(current_user.id == object.user_id)
   - if can? :vote, object
     - if object.voted_for? current_user
       .col-md-2
