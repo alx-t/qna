@@ -1,16 +1,27 @@
 language: ruby
+
 rvm:
   - 2.2.3
+
+notifications:
+  email: false
+
 env:
   - DB=postgresql
+
+bundler_args: --without development --deployment --jobs=3 --retry=3
+cache: bundler
+
 before_script:
   - cp config/database.travis.yml config/database.yml
   - psql -c 'create database travis_ci_test;' -U postgres
+  - bundle exec rake db:setup
+  - 'bundle exec rackup private_pub.ru -s puma -E production &'
+  - sleep 3
+
 script:
-  - bundle exec rackup private_pub.ru -s puma -E production &
-  - bundle exec rake db:migrate RAILS_ENV=test --trace
-  - bundle exec rake db:test:prepare
-  - bundle exec rake
+  - bundle exec rspec
+
 addons:
   code_climate:
     repo_token: a49b814d672ed9d6313fb8f2619ea7b631c28d37454a0b6ae234988b49fc635e
