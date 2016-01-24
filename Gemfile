@@ -31,8 +31,8 @@ gem 'devise'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter', '~> 1.2.1'
-
 gem 'cancancan'
+gem 'doorkeeper'
 
 group :development, :test do
   gem 'pry-byebug'
@@ -47,6 +47,7 @@ group :test do
   gem 'launchy'
   gem 'poltergeist'
   gem 'database_cleaner'
+  gem 'json_spec'
 
   gem "codeclimate-test-reporter", require: nil
 end
