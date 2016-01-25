@@ -24,6 +24,9 @@ gem 'cocoon'
 gem 'carrierwave'
 gem 'remotipart'
 gem 'responders'
+gem 'active_model_serializers'
+gem 'oj'
+gem 'oj_mimic_json'
 
 gem 'private_pub'
 
