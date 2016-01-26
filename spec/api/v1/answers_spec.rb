@@ -82,7 +82,7 @@ describe 'Answers API' do
 
       context 'answer contains attachments' do
         it "answer's attachment contains file url" do
-          expect(response.body).to be_json_eql(attachment.file.url.to_json).at_path("answer/attachments/0/file/url")
+          expect(response.body).to be_json_eql(attachment.file.url.to_json).at_path("answer/attachments/0/url")
         end
       end
     end

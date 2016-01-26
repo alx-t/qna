@@ -107,7 +107,7 @@ describe 'Questions API' do
 
       context 'question contains attachments' do
         it "question's attachment contains file url" do
-          expect(response.body).to be_json_eql(attachment.file.url.to_json).at_path("question/attachments/0/file/url")
+          expect(response.body).to be_json_eql(attachment.file.url.to_json).at_path("question/attachments/0/url")
         end
       end
     end
