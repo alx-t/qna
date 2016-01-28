@@ -22,16 +22,17 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'POST #create' do
+    let(:subject) { post :create, question_id: question, answer: attributes_for(:answer), format: :json }
     sign_in_user
 
     context 'with valid attributes' do
+
       it 'saves the new answer in th database' do
-        expect do
-          post :create,
-               question_id: question,
-               answer: attributes_for(:answer),
-               format: :json
-        end.to change { question.answers.count }.by(1)
+        expect {  subject }.to change { question.answers.count }.by(1)
+      end
+
+      it_behaves_like "Publishable" do
+        let(:channel) { "/questions/#{question.id}/answers" }
       end
     end
 

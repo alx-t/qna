@@ -70,16 +70,21 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'POST #create' do
+    let(:subject) { post :create, question: attributes_for(:question) }
     sign_in_user
 
     context 'with valid attributes' do
       it 'saves the new question in the database' do
-        expect { post :create, question: attributes_for(:question) }.to change(Question, :count).by(1)
+        expect { subject }.to change(Question, :count).by(1)
       end
 
       it 'redirect to show view' do
-        post :create, question: attributes_for(:question)
+        subject
         expect(response).to redirect_to question_path(assigns(:question))
+      end
+
+      it_behaves_like "Publishable" do
+        let(:channel) { "/questions" }
       end
     end
 
