@@ -4,16 +4,10 @@ describe 'Answers API' do
   let!(:question) { create :question }
 
   describe 'GET /index' do
-    context 'unauthorized' do
-      it 'returns 401 status if there is no access_token' do
-        get "/api/v1/questions/#{question.id}/answers", format: :json
-        expect(response.status).to eq 401
-      end
 
-      it 'returns 401 status if access_token is invalid' do
-        get "/api/v1/questions/#{question.id}/answers", format: :json, access_token: '1234'
-        expect(response.status).to eq 401
-      end
+    it_behaves_like "API Authenticable" do
+      let(:http_method) { 'get' }
+      let(:api_path) { "/api/v1/questions/#{question.id}/answers" }
     end
 
     context 'authorized' do
@@ -42,16 +36,9 @@ describe 'Answers API' do
   describe 'GET /show' do
     let(:answer) { create :answer, question: question }
 
-    context 'unauthorized' do
-      it 'returns 401 status if there is no access_token' do
-        get "/api/v1/questions/#{question.id}/answers/#{answer.id}", format: :json
-        expect(response.status).to eq 401
-      end
-
-      it 'returns 401 status if access_token is invalid' do
-        get "/api/v1/questions/#{question.id}/answers/#{answer.id}", format: :json, access_token: '1234'
-        expect(response.status).to eq 401
-      end
+    it_behaves_like "API Authenticable" do
+      let(:http_method) { 'get' }
+      let(:api_path) { "/api/v1/questions/#{question.id}/answers/#{answer.id}" }
     end
 
     context 'authorized' do
@@ -89,16 +76,10 @@ describe 'Answers API' do
   end
 
   describe 'POST /create' do
-    context 'unauthorized' do
-      it 'returns 401 status if there is no access_token' do
-        post "/api/v1/questions/#{question.id}/answers", format: :json
-        expect(response.status).to eq 401
-      end
 
-      it 'returns 401 status if access_token is invalid' do
-        post "/api/v1/questions/#{question.id}/answers", format: :json, access_token: '1234'
-        expect(response.status).to eq 401
-      end
+    it_behaves_like "API Authenticable" do
+      let(:http_method) { 'post' }
+      let(:api_path) { "/api/v1/questions/#{question.id}/answers" }
     end
 
     context 'authorized' do

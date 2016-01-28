@@ -40,6 +40,7 @@ RSpec.configure do |config|
   config.extend ControllerMacros, type: :controller
   config.include ControllerIncludeMacros, type: :controller
   config.include OmniauthMacros
+  config.include SharedExampleMacros
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
