@@ -15,68 +15,7 @@ RSpec.describe Vote, type: :model do
     it { belong_to :votable }
   end
 
-  describe 'question voting' do
-    let(:question) { create :question }
-    let(:user) { create :user }
-
-    it 'vote up' do
-      question.vote_up(user)
-      expect(question.votes.upvotes.rating).to eq 1
-      expect(question.votes.rating).to eq 1
-    end
-
-    it 'vote down' do
-      question.vote_down(user)
-      expect(question.votes.downvotes.rating).to eq -1
-      expect(question.votes.rating).to eq -1
-    end
-
-    it 'vote reset' do
-      question.vote_up(user)
-      question.vote_reset(user)
-      expect(question.votes.upvotes.rating).to eq 0
-      expect(question.votes.rating).to eq 0
-    end
-
-    it 'same user same question double vote up' do
-      question.vote_up(user)
-      question.vote_up(user)
-      expect(question.votes.upvotes.rating).to eq 1
-      expect(question.votes.rating).to eq 1
-    end
-  end
-
-  describe 'answers voting' do
-    let(:answer) { create :answer }
-    let(:user) { create :user }
-
-    it 'vote up' do
-      answer.vote_up(user)
-      expect(answer.votes.upvotes.rating).to eq 1
-      expect(answer.votes.rating).to eq 1
-    end
-
-    it 'vote down' do
-      answer.vote_down(user)
-      expect(answer.votes.downvotes.rating).to eq -1
-      expect(answer.votes.rating).to eq -1
-    end
-
-    it 'vote reset' do
-      answer.vote_up(user)
-      answer.vote_reset(user)
-      expect(answer.votes.upvotes.rating).to eq 0
-      expect(answer.votes.rating).to eq 0
-    end
-
-    it 'same user same answer double vote up' do
-      answer.vote_up(user)
-      answer.vote_up(user)
-      expect(answer.votes.upvotes.rating).to eq 1
-      expect(answer.votes.rating).to eq 1
-    end
-  end
-
-
+  it_behaves_like "Model votable", Question
+  it_behaves_like "Model votable", Answer
 end
 
