@@ -6,7 +6,6 @@ describe 'Answers API' do
   describe 'GET /index' do
 
     it_behaves_like "API Authenticable" do
-      let(:http_method) { 'get' }
       let(:api_path) { "/api/v1/questions/#{question.id}/answers" }
     end
 
@@ -37,7 +36,6 @@ describe 'Answers API' do
     let(:answer) { create :answer, question: question }
 
     it_behaves_like "API Authenticable" do
-      let(:http_method) { 'get' }
       let(:api_path) { "/api/v1/questions/#{question.id}/answers/#{answer.id}" }
     end
 

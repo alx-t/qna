@@ -4,7 +4,6 @@ describe 'Profile API' do
   describe 'GET /me' do
 
     it_behaves_like "API Authenticable" do
-      let(:http_method) { 'get' }
       let(:api_path) { "/api/v1/profiles/me" }
     end
 
@@ -35,7 +34,6 @@ describe 'Profile API' do
   describe 'GET /index' do
 
     it_behaves_like "API Authenticable" do
-      let(:http_method) { 'get' }
       let(:api_path) { "/api/v1/profiles" }
     end
 
