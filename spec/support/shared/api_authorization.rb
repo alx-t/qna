@@ -1,6 +1,6 @@
 shared_examples_for "API Authenticable" do
   context 'unauthorized' do
-    let(:http_method) { http_method ||= 'get' }
+    let(:http_method) { 'get' }
 
     it 'returns 401 status if there is no access_token' do
       do_request api_path, http_method
