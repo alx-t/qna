@@ -29,6 +29,7 @@ gem 'oj'
 gem 'oj_mimic_json'
 
 gem 'private_pub'
+gem 'sidekiq'
 
 gem 'devise'
 gem 'omniauth'
@@ -58,5 +59,7 @@ end
 group :development do
   gem 'web-console', '~> 2.0'
   gem 'spring'
+
+  gem 'letter_opener'
 end
 
