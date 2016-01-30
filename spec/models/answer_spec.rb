@@ -4,6 +4,7 @@ RSpec.describe Answer, type: :model do
   let(:question) { create :question }
   let(:answers) { create_list :answer, 3, question: question }
   let(:best_answer) { create :answer, question: question, body: 'the best' }
+  subject { build(:answer, question: question) }
 
   describe 'validations tests' do
     it { should validate_presence_of :body }
@@ -45,4 +46,10 @@ RSpec.describe Answer, type: :model do
       expect(question.answers.first).to eq best_answer
     end
   end
+
+  it 'notify subscribers for new answers' do
+    expect(NotifySubscribersJob).to receive(:perform_later).with(question)
+    subject.save!
+  end
 end
+

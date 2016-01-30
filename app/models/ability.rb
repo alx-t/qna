@@ -32,6 +32,14 @@ class Ability
     cannot :vote, [Question, Answer], user: user
 
     can :set_best, Answer, question: { user_id: user.id }
+
+    can :subscribe, Question do |question|
+      !question.subscribed? user
+    end
+
+    can :unsubscribe, Question do |question|
+      question.subscribed? user
+    end
   end
 end
 

@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index]
-  before_action :load_question, only: [:edit, :update, :destroy]
+  before_action :load_question, only: [:edit, :update, :destroy, :subscribe, :unsubscribe]
   before_action :build_answer, only: :show
   after_action :publish_question, only: :create
 
@@ -42,10 +42,20 @@ class QuestionsController < ApplicationController
     respond_with(current_user.questions.destroy(@question), location: questions_path) #unless @question.nil?
   end
 
+  def subscribe
+    @question.subscribe current_user
+    redirect_to @question
+  end
+
+  def unsubscribe
+    @question.unsubscribe current_user
+    redirect_to @question
+  end
+
   private
 
   def load_question
-    @question = current_user.questions.find_by(id: params[:id])
+    @question = Question.find_by(id: params[:id])
   end
 
   def build_answer

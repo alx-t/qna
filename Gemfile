@@ -30,6 +30,8 @@ gem 'oj_mimic_json'
 
 gem 'private_pub'
 gem 'sidekiq'
+gem 'sinatra', '>= 1.3.0', require: nil
+gem 'whenever'
 
 gem 'devise'
 gem 'omniauth'

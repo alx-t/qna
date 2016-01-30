@@ -65,9 +65,6 @@ feature 'Question stories', %q{
     sign_in user
     visit question_path smb_question
     expect(page).to_not have_content 'Edit'
-
-    visit edit_question_path smb_question
-    expect(page).to have_content 'You can not edit this question'
   end
 
   scenario 'Non-authenticated user tries to edit question' do

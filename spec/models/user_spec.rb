@@ -10,6 +10,8 @@ RSpec.describe User do
     it { should have_many(:questions).dependent(:destroy) }
     it { should have_many(:answers).dependent(:destroy) }
     it { should have_many(:authorizations).dependent(:destroy) }
+    it { should have_many(:subscriptions).dependent(:destroy) }
+    it { should have_many(:subscribed_questions).through(:subscriptions).class_name('Question') }
   end
 
   describe '.find_for_oauth' do

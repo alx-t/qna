@@ -15,7 +15,6 @@ RSpec.describe DailyMailer, type: :mailer do
     it "renders the body" do
       expect(mail.body.encoded).to match("Hi")
       expect(mail.body.encoded).to match(question.title)
-      p mail.body
     end
   end
 

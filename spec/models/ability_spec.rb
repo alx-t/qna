@@ -50,6 +50,22 @@ describe Ability do
 
     it { should be_able_to :set_best, answer, user: user }
     it { should_not be_able_to :set_best, other_answer, user: user }
+
+    it { should be_able_to :subscribe, create(:question), user: user }
+
+    let!(:subscribed_question) { create :question }
+
+    it 'can not subscribe if already subscribed' do
+      subscribed_question.subscribe user
+      should_not be_able_to :subscribe, subscribed_question, user: user
+    end
+
+    it { should_not be_able_to :unsubscribe, create(:question), user: user }
+
+    it 'can unsubscribe if already subscribed' do
+      subscribed_question.subscribe user
+      should be_able_to :unsubscribe, subscribed_question, user: user
+    end
   end
 end
 
