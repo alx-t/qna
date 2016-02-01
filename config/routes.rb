@@ -32,6 +32,8 @@ Rails.application.routes.draw do
     post :unsubscribe, on: :member
   end
 
+  get '/search' => 'search#search'
+
   namespace :api do
     namespace :v1 do
       resources :profiles, only: [:index] do

@@ -21,6 +21,9 @@ html
       .notice
         = render 'shared/notice'
 
+      .search
+        = render 'search/form'
+
       .col-md-10.main data={current_user_id: "#{current_user.id if user_signed_in?}"}
         = yield
 

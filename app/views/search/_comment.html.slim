@@ -1,0 +1,7 @@
+h4 Comment
+div
+  - if comment.commentable.is_a? Question
+    = link_to comment.body.truncate(100), question_path(comment.commentable)
+
+  - if comment.commentable.is_a? Answer
+    = link_to comment.body.truncate(100), question_path(comment.commentable.question)

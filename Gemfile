@@ -33,6 +33,11 @@ gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', require: nil
 gem 'whenever'
 
+gem 'mysql2'
+gem 'thinking-sphinx'
+
+gem 'active_interaction'
+
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-facebook'
