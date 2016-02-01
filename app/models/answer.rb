@@ -11,7 +11,8 @@ class Answer < ActiveRecord::Base
 
   default_scope -> { order(is_best: :desc).order(created_at: :asc) }
 
-  after_create :notify_subscribers
+  #after_create :notify_subscribers
+  after_commit :notify_subscribers
 
   def set_best
     ActiveRecord::Base.transaction do

@@ -56,6 +56,8 @@ group :test do
   gem 'json_spec'
 
   gem "codeclimate-test-reporter", require: nil
+
+  gem 'test_after_commit' # deprecated in Rails 5.0
 end
 
 group :development do
