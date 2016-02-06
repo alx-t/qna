@@ -46,7 +46,8 @@ gem 'cancancan'
 gem 'doorkeeper'
 
 gem 'dotenv'
-gem 'dotenv-deployment', require: 'dotenv/deployment'
+#gem 'dotenv-deployment', require: 'dotenv/deployment'
+gem 'dotenv-rails', require: 'dotenv/rails-now'
 
 group :development, :test do
   gem 'pry-byebug'
