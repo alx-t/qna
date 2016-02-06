@@ -45,6 +45,9 @@ gem 'omniauth-twitter', '~> 1.2.1'
 gem 'cancancan'
 gem 'doorkeeper'
 
+gem 'dotenv'
+gem 'dotenv-deployment', require: 'dotenv/deployment'
+
 group :development, :test do
   gem 'pry-byebug'
   gem 'rspec-rails'
@@ -70,5 +73,10 @@ group :development do
   gem 'spring'
 
   gem 'letter_opener'
+
+  gem 'capistrano', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rbenv', require: false
 end
 
