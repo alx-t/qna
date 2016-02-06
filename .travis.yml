@@ -14,6 +14,7 @@ cache: bundler
 
 before_script:
   - cp config/database.travis.yml config/database.yml
+  - cp config/private_pub.travis.yml config/private_pub.yml
   - psql -c 'create database travis_ci_test;' -U postgres
   - bundle exec rake db:setup
   - 'bundle exec rackup private_pub.ru -s puma -E production &'
