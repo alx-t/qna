@@ -45,8 +45,9 @@ gem 'omniauth-twitter', '~> 1.2.1'
 gem 'cancancan'
 gem 'doorkeeper'
 
-gem 'dotenv'
+#gem 'dotenv'
 #gem 'dotenv-deployment', require: 'dotenv/deployment'
+#gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 
 group :development, :test do
