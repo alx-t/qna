@@ -51,11 +51,11 @@ gem 'dotenv-deployment', require: 'dotenv/deployment'
 #gem 'dotenv-rails', require: 'dotenv/rails-now'
 
 gem 'faker'
+gem 'factory_girl_rails'
 
 group :development, :test do
   gem 'pry-byebug'
   gem 'rspec-rails'
-  gem 'factory_girl_rails'
   gem 'spring-commands-rspec'
 end
 
