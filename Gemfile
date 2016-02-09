@@ -50,6 +50,8 @@ gem 'dotenv'
 gem 'dotenv-deployment', require: 'dotenv/deployment'
 #gem 'dotenv-rails', require: 'dotenv/rails-now'
 
+gem 'faker'
+
 group :development, :test do
   gem 'pry-byebug'
   gem 'rspec-rails'
