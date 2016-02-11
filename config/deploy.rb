@@ -127,7 +127,7 @@ namespace :deploy do
   after :publishing, :restart
 end
 
-after 'deploy:restart', 'private_pub:restart'
+after 'deploy:restart', 'private_pub:start'
 after 'deploy:restart', 'ts:restart'
 after 'deploy:restart', 'ts:index'
 

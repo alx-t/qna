@@ -49,6 +49,7 @@ gem 'doorkeeper'
 gem 'dotenv'
 gem 'dotenv-deployment', require: 'dotenv/deployment'
 #gem 'dotenv-rails', require: 'dotenv/rails-now'
+gem 'unicorn'
 
 gem 'faker'
 gem 'factory_girl_rails'
@@ -83,5 +84,6 @@ group :development do
   gem 'capistrano-rails', require: false
   gem 'capistrano-rbenv', require: false
   gem 'capistrano-sidekiq', '0.5.3', require: false
+  gem 'capistrano3-unicorn', require: false
 end
 
