@@ -1,10 +1,11 @@
 .row
-  .col-md-2.answer-votes-up 
-    | Upvotes: #{object.votes.upvotes.rating}
-  .col-md-2.answer-votes-down 
-    | Downvotes: #{object.votes.downvotes.rating}
-  .col-md-2.answer-votes-rating 
-    | Rating: #{object.votes.rating}
+  - cache [object, :vote]
+    .col-md-2.answer-votes-up 
+      | Upvotes: #{object.votes.upvotes.rating}
+    .col-md-2.answer-votes-down 
+      | Downvotes: #{object.votes.downvotes.rating}
+    .col-md-2.answer-votes-rating 
+      | Rating: #{object.votes.rating}
   br
 .row.answer-votes-links
   - if can? :vote, object

@@ -27,6 +27,8 @@ feature 'Search', %q{
     select('Questions', from: 'query_condition')
     click_on 'Search'
 
+    save_page
+
     within '.search_results' do
       expect(page).to have_content 'matched title question'
       expect(page).to have_content matched_body_question.title

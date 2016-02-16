@@ -2,19 +2,20 @@ h3 Questions
 hr
 
 .question-list
-  - @questions.each do |question|  
-    .row.question id="#{dom_id(question)}"
-      .col-md-1
-        = question.votes.count
-        br
-        | votes
-      .col-md-1
-        = question.answers.count
-        br
-        | answers
-      .col-md-6
-        = link_to question.title, question
-    hr
+  - cache collection_cache_key_for :question do
+    - @questions.each do |question|  
+      .row.question id="#{dom_id(question)}"
+        .col-md-1
+          = question.votes.count
+          br
+          | votes
+        .col-md-1
+          = question.answers.count
+          br
+          | answers
+        .col-md-6
+          = link_to question.title, question
+      hr
 
 .row
   /- if user_signed_in?

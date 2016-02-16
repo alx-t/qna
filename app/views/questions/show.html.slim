@@ -1,14 +1,15 @@
 .question id="#{dom_id(@question)}"
-  h3
-    = @question.title
-  hr
-  = @question.body
-  hr
-  .question-attachments
-    p Attachments:
-    ul 
-      -@question.attachments.each do |a|
-        li = link_to a.file.identifier, a.file.url
+  - cache @question do
+    h3
+      = @question.title
+    hr
+    = @question.body
+    hr
+    .question-attachments
+      p Attachments:
+      ul 
+        -@question.attachments.each do |a|
+          li = link_to a.file.identifier, a.file.url
   br
 .row
   - if can? :manage, @question

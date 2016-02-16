@@ -1,10 +1,11 @@
 .row
-  .col-md-2.question-votes-up 
-    | Upvotes: #{object.votes.upvotes.rating}
-  .col-md-2.question-votes-down 
-    | Downvotes: #{object.votes.downvotes.rating}
-  .col-md-2.question-votes-rating 
-    | Rating: #{object.votes.rating}
+  - cache [object, :vote]
+    .col-md-2.question-votes-up 
+      | Upvotes: #{object.votes.upvotes.rating}
+    .col-md-2.question-votes-down 
+      | Downvotes: #{object.votes.downvotes.rating}
+    .col-md-2.question-votes-rating 
+      | Rating: #{object.votes.rating}
   br
 .row.question-votes-links
   /- if user_signed_in? && !(current_user.id == object.user_id)

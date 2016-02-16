@@ -50,12 +50,14 @@ gem 'dotenv'
 gem 'dotenv-deployment', require: 'dotenv/deployment'
 #gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'unicorn'
+gem 'redis-rails'
 
 gem 'faker'
 gem 'factory_girl_rails'
 
 group :development, :test do
   gem 'pry-byebug'
+  gem 'pry-rails'
   gem 'rspec-rails'
   gem 'spring-commands-rspec'
 end

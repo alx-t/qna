@@ -1,6 +1,6 @@
 class Vote < ActiveRecord::Base
   belongs_to :user
-  belongs_to :votable, polymorphic: true
+  belongs_to :votable, polymorphic: true, touch: true
 
   validates :value, presence: true
   validates :user_id, presence: true, uniqueness: { case_sensitive: true, scope: [:votable_type, :votable_id] }
