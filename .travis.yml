@@ -9,6 +9,9 @@ notifications:
 env:
   - DB=postgresql
 
+services:
+  - redis-server
+
 bundler_args: --without development --deployment --jobs=3 --retry=3
 cache: bundler
 
@@ -19,6 +22,7 @@ before_script:
   - bundle exec rake db:setup
   - 'bundle exec rackup private_pub.ru -s puma -E production &'
   - sleep 3
+# before_script: sudo redis-server /etc/redis/redis.conf --port 6380 --requirepass 'secret'  # to remaind
 
 script:
   - bundle exec rspec
