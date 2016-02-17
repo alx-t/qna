@@ -7,10 +7,6 @@ feature 'Search', %q{
   I want to be able to search with sphinx
 } do
 
-  #given!(:questions) { create_list :question, 10 }
-  #given!(:answers) { create_list :answer, 10 }
-  #given!(:comments) { create_list :question_comment, 10 }
-  #given!(:users) { create_list :user, 10 }
   given!(:matched_title_question) { create :question, title: 'matched title question' }
   given!(:matched_body_question) { create :question, body: 'matched body question' }
   given!(:matched_answer) { create :answer, body: 'matched body answer' }
@@ -26,8 +22,6 @@ feature 'Search', %q{
     fill_in 'query_query', with: 'matched'
     select('Questions', from: 'query_condition')
     click_on 'Search'
-
-    save_page
 
     within '.search_results' do
       expect(page).to have_content 'matched title question'
