@@ -24,5 +24,11 @@ FactoryGirl.define do
     body nil
     user
   end
+
+  factory :tags_question, class: 'Question' do
+    title
+    body '#Test question #body #ruby'
+    user
+  end
 end
 

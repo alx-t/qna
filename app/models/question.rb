@@ -14,6 +14,7 @@ class Question < ActiveRecord::Base
   validates :title, :body, :user_id, presence: true
 
   after_create :subscribe_author
+  after_save :store_hashtags
 
   def subscribe(user)
     subscribers << user unless subscribed? user
@@ -31,6 +32,13 @@ class Question < ActiveRecord::Base
 
   def subscribe_author
     subscribe user
+  end
+
+  def store_hashtags
+    hashtags_array = self.body.scan(/#\w*/).map(&:downcase).sort
+    unless self.hashtags == hashtags_array
+      self.update_attributes(hashtags: hashtags_array)
+    end
   end
 end
 

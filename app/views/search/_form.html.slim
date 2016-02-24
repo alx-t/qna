@@ -2,7 +2,7 @@
   .col-md-4
     = simple_form_for :query, url: search_path, method: :get do |f|
       = f.input :query
-      = f.input :condition, priority: ["Everywhere"], collection: %w(Everywhere Questions Answers Comments Users)
+      = f.input :condition, priority: ["Everywhere"], collection: %w(Everywhere Questions Answers Comments Users Tags)
 
       .btn = f.submit 'Search'
 

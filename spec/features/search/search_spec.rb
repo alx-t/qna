@@ -9,6 +9,7 @@ feature 'Search', %q{
 
   given!(:matched_title_question) { create :question, title: 'matched title question' }
   given!(:matched_body_question) { create :question, body: 'matched body question' }
+  given!(:matched_tags_question) { create :question, body: 'hashtags #body question #test' }
   given!(:matched_answer) { create :answer, body: 'matched body answer' }
   given!(:matched_comment) { create :question_comment, body: 'matched body comment' }
   given!(:matched_user) { create :user, email: 'user@matched.com' }
@@ -59,6 +60,17 @@ feature 'Search', %q{
 
     within '.search_results' do
       expect(page).to have_content matched_user.email
+      expect(page).to have_selector('div', count: 1)
+    end
+  end
+
+  scenario 'Search in tags', js: true do
+    fill_in 'query_query', with: '#test'
+    select('Tags', from: 'query_condition')
+    click_on 'Search'
+
+    within '.search_results' do
+      expect(page).to have_content matched_tags_question.title
       expect(page).to have_selector('div', count: 1)
     end
   end

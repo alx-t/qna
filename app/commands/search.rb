@@ -10,7 +10,10 @@ class Search < ActiveInteraction::Base
     safe_query = Riddle::Query.escape(query)
 
     if condition_include?
-      condition.singularize.constantize.search(safe_query)
+      #self.condition = 'Questions' if self.condition == 'Tags'
+      self.condition.singularize.constantize.search(safe_query)
+    elsif self.condition == 'Tags'
+      Question.where("hashtags @> ?", "{#{query}}")
     else
       ThinkingSphinx.search safe_query
     end
