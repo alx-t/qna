@@ -3,7 +3,8 @@
     h3
       = @question.title
     hr
-    = @question.body
+    /= @question.body
+    == hashtag_links(@question.body)
     hr
     .question-attachments
       p Attachments:
