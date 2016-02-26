@@ -54,5 +54,18 @@ RSpec.describe Question, type: :model do
     expect(subject).to receive(:subscribe).with(subject.user)
     subject.save!
   end
+
+  context 'can store tags array' do
+    let!(:tags_question) { create :tags_question }
+
+    it 'store tags' do
+      expect(tags_question.hashtags).to match_array(%w(#test #body #ruby))
+    end
+
+    it 'update tags' do
+      tags_question.update body: "test #rails"
+      expect(tags_question.hashtags).to match_array(%w(#rails))
+    end
+  end
 end
 
